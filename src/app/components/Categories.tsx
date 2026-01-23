@@ -1,5 +1,5 @@
 import { Card } from "@/app/components/ui/card";
-import { Code, Database, TrendingUp, Palette, Smartphone, Briefcase } from "lucide-react";
+import { Briefcase, Code, Database, Palette, Smartphone, TrendingUp } from "lucide-react";
 
 const categories = [
   {
@@ -52,7 +52,7 @@ const categories = [
   },
 ];
 
-export function Categories() {
+export function Categories({ onExploreCourses }: { onExploreCourses: () => void }) {
   return (
     <section className="py-16 md:py-24 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -72,6 +72,7 @@ export function Categories() {
               <Card
                 key={index}
                 className="group p-6 hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-orange-200"
+                onClick={onExploreCourses}
               >
                 <div className="flex items-start gap-4">
                   <div className={`${category.bgColor} p-4 rounded-xl group-hover:scale-110 transition-transform duration-300`}>

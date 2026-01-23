@@ -6,7 +6,6 @@ export function Hero() {
     <section className="relative overflow-hidden bg-gradient-to-br from-orange-50 via-red-50 to-white">
       <div className="container mx-auto px-4 py-16 md:py-24">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
           <div className="space-y-6">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
               Master Digital Skills for{" "}

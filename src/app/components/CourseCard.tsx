@@ -1,7 +1,7 @@
-import { Card } from "@/app/components/ui/card";
-import { Button } from "@/app/components/ui/button";
 import { Badge } from "@/app/components/ui/badge";
-import { Star, Clock, Users, BookOpen } from "lucide-react";
+import { Button } from "@/app/components/ui/button";
+import { Card } from "@/app/components/ui/card";
+import { BookOpen, Clock, Star, Users } from "lucide-react";
 
 interface CourseCardProps {
   title: string;

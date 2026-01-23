@@ -1,5 +1,5 @@
 import { Card } from "@/app/components/ui/card";
-import { Award, Clock, Users, HeadphonesIcon, Trophy, BookOpen } from "lucide-react";
+import { Award, BookOpen, Clock, HeadphonesIcon, Trophy, Users } from "lucide-react";
 
 const features = [
   {

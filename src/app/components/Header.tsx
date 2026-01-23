@@ -1,22 +1,49 @@
-import { Button } from "@/app/components/ui/button";
-import { Menu, X, ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { supabase } from "@/supabaseclient";
+import { ChevronDown, Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Button } from "./ui/button";
 
-export function Header() {
+interface HeaderProps {
+  onLoginClick: () => void;
+  onSignupClick: () => void;
+}
+
+export function Header({ onLoginClick, onSignupClick }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+      setIsLoggedIn(!!user);
+    };
+
+    checkAuth();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event: any, session: any) => {
+      setUser(session?.user || null);
+      setIsLoggedIn(!!session?.user);
+    });
+
+    return () => subscription?.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setIsLoggedIn(false);
+    setUser(null);
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-orange-600 to-red-600 flex items-center justify-center text-white">
-              <span className="text-sm font-bold">DS</span>
-            </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
-              DigitalskillSathi
-            </span>
-          </div>
+      <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
+        <div 
+          className="flex items-center cursor-pointer flex-shrink-0"
+          onClick={() => window.history.pushState({}, "", "/")}
+        >
+          <img src="/logo.png" alt="DigitalskillSathi" className="h-25 w-30 object-contain flex-shrink-0" />
         </div>
 
         {/* Desktop Navigation */}
@@ -54,12 +81,23 @@ export function Header() {
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
-          <Button variant="ghost" className="text-sm">
-            Login
-          </Button>
-          <Button className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700">
-            Sign Up
-          </Button>
+          {isLoggedIn ? (
+            <>
+              <span className="text-sm text-gray-600">Welcome, {user?.email}</span>
+              <Button variant="ghost" className="text-sm" onClick={handleLogout}>
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button variant="ghost" className="text-sm" onClick={onLoginClick}>
+                Login
+              </Button>
+              <Button className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700" onClick={onSignupClick}>
+                Sign Up
+              </Button>
+            </>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -97,12 +135,23 @@ export function Header() {
               Contact
             </a>
             <div className="flex flex-col gap-2 pt-4 border-t">
-              <Button variant="ghost" className="w-full">
-                Login
-              </Button>
-              <Button className="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700">
-                Sign Up
-              </Button>
+              {isLoggedIn ? (
+                <>
+                  <span className="text-sm text-gray-600 px-2 py-1">Welcome, {user?.email}</span>
+                  <Button variant="ghost" className="w-full" onClick={handleLogout}>
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="ghost" className="w-full" onClick={onLoginClick}>
+                    Login
+                  </Button>
+                  <Button className="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700" onClick={onSignupClick}>
+                    Sign Up
+                  </Button>
+                </>
+              )}
             </div>
           </nav>
         </div>

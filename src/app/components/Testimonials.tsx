@@ -1,6 +1,6 @@
-import { Card } from "@/app/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/app/components/ui/avatar";
-import { Star, Quote } from "lucide-react";
+import { Quote, Star } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Card } from "./ui/card";
 
 const testimonials = [
   {
@@ -9,46 +9,6 @@ const testimonials = [
     company: "Tech Solutions Inc.",
     image: "https://images.unsplash.com/photo-1765648636065-fd5c0884b629?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHByb2Zlc3Npb25hbCUyMHN0dWRlbnR8ZW58MXx8fHwxNzY5MTQwNTU4fDA&ixlib=rb-4.1.0&q=80&w=1080",
     content: "DigitalskillSathi transformed my career! The web development course was incredibly comprehensive and the instructors were always available to help. I landed my dream job within 3 months of completing the course.",
-    rating: 5,
-  },
-  {
-    name: "Rahul Verma",
-    role: "Data Scientist",
-    company: "Analytics Pro",
-    image: "https://images.unsplash.com/photo-1765648636065-fd5c0884b629?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHByb2Zlc3Npb25hbCUyMHN0dWRlbnR8ZW58MXx8fHwxNzY5MTQwNTU4fDA&ixlib=rb-4.1.0&q=80&w=1080",
-    content: "The data science program exceeded my expectations. Real-world projects and hands-on learning made all the difference. Highly recommend for anyone looking to break into data science!",
-    rating: 5,
-  },
-  {
-    name: "Sneha Patel",
-    role: "Digital Marketer",
-    company: "Marketing Wizards",
-    image: "https://images.unsplash.com/photo-1765648636065-fd5c0884b629?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHByb2Zlc3Npb25hbCUyMHN0dWRlbnR8ZW58MXx8fHwxNzY5MTQwNTU4fDA&ixlib=rb-4.1.0&q=80&w=1080",
-    content: "Amazing platform with top-notch content! The digital marketing course gave me practical skills that I use every day. The community support is fantastic too!",
-    rating: 5,
-  },
-  {
-    name: "Arjun Menon",
-    role: "UI/UX Designer",
-    company: "Design Studio",
-    image: "https://images.unsplash.com/photo-1765648636065-fd5c0884b629?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHByb2Zlc3Npb25hbCUyMHN0dWRlbnR8ZW58MXx8fHwxNjkxNDA1NTgwfDA&ixlib=rb-4.1.0&q=80&w=1080",
-    content: "Best investment I've made in my career. The UI/UX course was well-structured and the projects helped me build an impressive portfolio. Now working at my dream company!",
-    rating: 5,
-  },
-  {
-    name: "Anjali Singh",
-    role: "Full Stack Developer",
-    company: "StartupTech",
-    image: "https://images.unsplash.com/photo-1765648636065-fd5c0884b629?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHByb2Zlc3Npb25hbCUyMHN0dWRlbnR8ZW58MXx8fHwxNzY5MTQwNTU4fDA&ixlib=rb-4.1.0&q=80&w=1080",
-    content: "The quality of instruction and course material is outstanding. I went from zero coding knowledge to building full-stack applications. Couldn't be happier with my progress!",
-    rating: 5,
-  },
-  {
-    name: "Vikram Kumar",
-    role: "Business Analyst",
-    company: "Consulting Group",
-    image: "https://images.unsplash.com/photo-1765648636065-fd5c0884b629?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHByb2Zlc3Npb25hbCUyMHN0dWRlbnR8ZW58MXx8fHwxNzY5MTQwNTU4fDA&ixlib=rb-4.1.0&q=80&w=1080",
-    content: "Exceptional learning experience! The business analytics course provided practical insights and tools I now use daily. Great value for money!",
     rating: 5,
   },
 ];

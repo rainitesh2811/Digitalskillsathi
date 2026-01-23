@@ -1,4 +1,4 @@
-import { Button } from "@/app/components/ui/button";
+import { Button } from "./ui/button";
 import { ArrowRight } from "lucide-react";
 
 export function CTA() {
@@ -24,8 +24,7 @@ export function CTA() {
               </Button>
               <Button 
                 size="lg" 
-                variant="outline" 
-                className="border-2 border-white text-white hover:bg-white/10 px-8"
+                className="bg-white text-orange-600 hover:bg-gray-100 px-8"
               >
                 View Pricing
               </Button>
