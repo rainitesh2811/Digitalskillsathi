@@ -1,0 +1,122 @@
+import { Facebook, Twitter, Instagram, Linkedin, Youtube, Mail, Phone, MapPin } from "lucide-react";
+
+export function Footer() {
+  return (
+    <footer id="contact" className="bg-gray-900 text-gray-300">
+      <div className="container mx-auto px-4 py-12 md:py-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+          {/* Company Info */}
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-orange-600 to-red-600 flex items-center justify-center text-white">
+                <span className="font-bold">DS</span>
+              </div>
+              <span className="text-xl font-bold text-white">DigitalskillSathi</span>
+            </div>
+            <p className="text-sm mb-4">
+              Empowering learners worldwide with quality online education and practical skills for the digital age.
+            </p>
+            <div className="flex gap-3">
+              <a href="#" className="h-10 w-10 rounded-full bg-gray-800 hover:bg-orange-600 flex items-center justify-center transition-colors">
+                <Facebook className="h-5 w-5" />
+              </a>
+              <a href="#" className="h-10 w-10 rounded-full bg-gray-800 hover:bg-orange-600 flex items-center justify-center transition-colors">
+                <Twitter className="h-5 w-5" />
+              </a>
+              <a href="#" className="h-10 w-10 rounded-full bg-gray-800 hover:bg-orange-600 flex items-center justify-center transition-colors">
+                <Instagram className="h-5 w-5" />
+              </a>
+              <a href="#" className="h-10 w-10 rounded-full bg-gray-800 hover:bg-orange-600 flex items-center justify-center transition-colors">
+                <Linkedin className="h-5 w-5" />
+              </a>
+              <a href="#" className="h-10 w-10 rounded-full bg-gray-800 hover:bg-orange-600 flex items-center justify-center transition-colors">
+                <Youtube className="h-5 w-5" />
+              </a>
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h3 className="text-white font-semibold mb-4">Quick Links</h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <a href="#about" className="hover:text-orange-400 transition-colors">About Us</a>
+              </li>
+              <li>
+                <a href="#courses" className="hover:text-orange-400 transition-colors">Courses</a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-orange-400 transition-colors">Instructors</a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-orange-400 transition-colors">Success Stories</a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-orange-400 transition-colors">Blog</a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-orange-400 transition-colors">Career</a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Categories */}
+          <div>
+            <h3 className="text-white font-semibold mb-4">Categories</h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <a href="#" className="hover:text-orange-400 transition-colors">Web Development</a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-orange-400 transition-colors">Data Science</a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-orange-400 transition-colors">Digital Marketing</a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-orange-400 transition-colors">Design & Creative</a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-orange-400 transition-colors">Mobile Development</a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-orange-400 transition-colors">Business</a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact Info */}
+          <div>
+            <h3 className="text-white font-semibold mb-4">Contact Us</h3>
+            <ul className="space-y-3 text-sm">
+              <li className="flex items-start gap-3">
+                <MapPin className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
+                <span>123 Learning Street, Education City, IN 110001</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone className="h-5 w-5 text-orange-400 flex-shrink-0" />
+                <span>+91 98765 43210</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Mail className="h-5 w-5 text-orange-400 flex-shrink-0" />
+                <span>support@digitalskillsathi.com</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="border-t border-gray-800 pt-8 mt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
+            <p>&copy; 2026 DigitalskillSathi. All rights reserved.</p>
+            <div className="flex gap-6">
+              <a href="#" className="hover:text-orange-400 transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-orange-400 transition-colors">Terms of Service</a>
+              <a href="#" className="hover:text-orange-400 transition-colors">Cookie Policy</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
