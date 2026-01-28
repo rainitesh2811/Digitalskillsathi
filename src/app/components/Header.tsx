@@ -97,7 +97,10 @@ export function Header({ onLoginClick, onSignupClick }: HeaderProps) {
               Settings
             </button>
 
-            <Button variant="ghost" className="text-sm" onClick={handleLogout}>
+            <Button 
+              className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-sm" 
+              onClick={handleLogout}
+            >
               Logout
             </Button>
           </nav>
@@ -173,7 +176,7 @@ export function Header({ onLoginClick, onSignupClick }: HeaderProps) {
                 </button>
 
                 <div className="pt-4 border-t">
-                  <Button variant="ghost" className="w-full" onClick={handleLogout}>
+                  <Button className="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700" onClick={handleLogout}>
                     Logout
                   </Button>
                 </div>

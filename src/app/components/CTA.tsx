@@ -3,9 +3,10 @@ import { Button } from "./ui/button";
 
 interface CTAProps {
   onGetStartedClick?: () => void;
+  isLoggedIn?: boolean;
 }
 
-export function CTA({ onGetStartedClick }: CTAProps) {
+export function CTA({ onGetStartedClick, isLoggedIn }: CTAProps) {
   return (
     <section className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-4">
@@ -15,18 +16,22 @@ export function CTA({ onGetStartedClick }: CTAProps) {
               Ready to Start Your Learning Journey?
             </h2>
             <p className="text-lg text-orange-100 mb-8 max-w-2xl mx-auto">
-              Join thousands of students already learning on DigitalskillSathi. 
-              Get unlimited access to all courses and start building your future today.
+              {isLoggedIn 
+                ? "Continue exploring and enjoy unlimited access to all courses."
+                : "Join thousands of students already learning on DigitalskillSathi. Get unlimited access to all courses and start building your future today."
+              }
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
-              <Button 
-                size="lg" 
-                className="bg-white text-orange-600 hover:bg-gray-100 px-8"
-                onClick={onGetStartedClick}
-              >
-                Get Started Now
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+              {!isLoggedIn && (
+                <Button 
+                  size="lg" 
+                  className="bg-white text-orange-600 hover:bg-gray-100 px-8"
+                  onClick={onGetStartedClick}
+                >
+                  Get Started Now
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              )}
             </div>
             
             <div className="mt-8 flex flex-wrap justify-center gap-8 text-sm">

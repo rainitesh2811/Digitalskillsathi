@@ -1,3 +1,4 @@
+import { supabase } from "@/supabaseclient";
 import { useEffect, useRef, useState } from "react";
 import { Categories } from "./components/Categories";
 import { CTA } from "./components/CTA";
@@ -17,7 +18,27 @@ export default function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState<string>("/");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const featuredCoursesRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      setIsLoggedIn(!!session?.user);
+    };
+
+    checkAuth();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event: any, session: any) => {
+      setIsLoggedIn(!!session?.user);
+    });
+
+    return () => subscription?.unsubscribe();
+  }, []);
 
   useEffect(() => {
     const handleNavigation = () => {
@@ -94,7 +115,7 @@ export default function App() {
         </div>
         <Features />
         <Testimonials />
-        <CTA onGetStartedClick={handleLoginClick} />
+        <CTA onGetStartedClick={handleLoginClick} isLoggedIn={isLoggedIn} />
       </main>
       <Footer />
       <LoginModal 
