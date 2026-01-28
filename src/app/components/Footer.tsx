@@ -87,7 +87,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 pt-8 mt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
-            <p>&copy; 2026 DigitalskillSathi. All rights reserved.</p>
+            <p>&copy; 2026 DigitalskillSathi. Designed & Developed By Recline Media.</p>
             <div className="flex gap-6">
               <button
                 onClick={() => handleNavigateToPolicy("privacy-policy")}

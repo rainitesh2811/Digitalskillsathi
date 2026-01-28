@@ -94,7 +94,7 @@ export default function App() {
         </div>
         <Features />
         <Testimonials />
-        <CTA />
+        <CTA onGetStartedClick={handleLoginClick} />
       </main>
       <Footer />
       <LoginModal 

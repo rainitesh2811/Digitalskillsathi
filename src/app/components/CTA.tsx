@@ -1,7 +1,11 @@
-import { Button } from "./ui/button";
 import { ArrowRight } from "lucide-react";
+import { Button } from "./ui/button";
 
-export function CTA() {
+interface CTAProps {
+  onGetStartedClick?: () => void;
+}
+
+export function CTA({ onGetStartedClick }: CTAProps) {
   return (
     <section className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-4">
@@ -18,15 +22,10 @@ export function CTA() {
               <Button 
                 size="lg" 
                 className="bg-white text-orange-600 hover:bg-gray-100 px-8"
+                onClick={onGetStartedClick}
               >
                 Get Started Now
                 <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              <Button 
-                size="lg" 
-                className="bg-white text-orange-600 hover:bg-gray-100 px-8"
-              >
-                View Pricing
               </Button>
             </div>
             
@@ -45,8 +44,7 @@ export function CTA() {
               </div>
             </div>
           </div>
-          
-          {/* Background Decoration */}
+
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-orange-800/30 rounded-full blur-3xl"></div>
         </div>
