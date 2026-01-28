@@ -10,6 +10,7 @@ import { Hero } from "./components/Hero";
 import { LoginModal } from "./components/LoginModal";
 import { SignupModal } from "./components/SignupModal";
 import { Testimonials } from "./components/Testimonials";
+import { AboutUs } from "./pages/AboutUs";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { RefundPolicy } from "./pages/RefundPolicy";
 import { TermsOfService } from "./pages/TermsOfService";
@@ -23,17 +24,13 @@ export default function App() {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
+      const { data: { session } } = await supabase.auth.getSession();
       setIsLoggedIn(!!session?.user);
     };
 
     checkAuth();
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((event: any, session: any) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setIsLoggedIn(!!session?.user);
     });
 
@@ -44,25 +41,19 @@ export default function App() {
     const handleNavigation = () => {
       const path = window.location.pathname;
       setCurrentPage(path);
-
-      if (path === "/login") {
-        setIsLoginOpen(true);
-      } else if (path === "/signup") {
-        setIsSignupOpen(true);
-      } else {
+      if (path === "/login") setIsLoginOpen(true);
+      else if (path === "/signup") setIsSignupOpen(true);
+      else {
         setIsLoginOpen(false);
         setIsSignupOpen(false);
       }
     };
-
     handleNavigation();
-
-    window.addEventListener("navigate", handleNavigation);
     window.addEventListener("popstate", handleNavigation);
-
+    window.addEventListener("navigate", handleNavigation);
     return () => {
-      window.removeEventListener("navigate", handleNavigation);
       window.removeEventListener("popstate", handleNavigation);
+      window.removeEventListener("navigate", handleNavigation);
     };
   }, []);
 
@@ -92,17 +83,10 @@ export default function App() {
     }
   };
 
-  if (currentPage === "/privacy-policy") {
-    return <PrivacyPolicy />;
-  }
-
-  if (currentPage === "/terms-of-service") {
-    return <TermsOfService />;
-  }
-
-  if (currentPage === "/refund-policy") {
-    return <RefundPolicy />;
-  }
+  if (currentPage === "/privacy-policy") return <PrivacyPolicy />;
+  if (currentPage === "/terms-of-service") return <TermsOfService />;
+  if (currentPage === "/refund-policy") return <RefundPolicy />;
+  if (currentPage === "/about") return <AboutUs />;
 
   return (
     <div className="min-h-screen bg-white">
@@ -115,7 +99,10 @@ export default function App() {
         </div>
         <Features />
         <Testimonials />
-        <CTA onGetStartedClick={handleLoginClick} isLoggedIn={isLoggedIn} />
+        <CTA 
+          onGetStartedClick={handleSignupClick} 
+          isLoggedIn={isLoggedIn} 
+        />
       </main>
       <Footer />
       <LoginModal 

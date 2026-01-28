@@ -31,7 +31,7 @@ export function Footer() {
             <h3 className="text-white font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#about" className="hover:text-orange-400 transition-colors">About Us</a>
+                <button onClick={() => handleNavigateToPolicy("about")} className="hover:text-orange-400 transition-colors cursor-pointer">About Us</button>
               </li>
               <li>
                 <a href="#courses" className="hover:text-orange-400 transition-colors">Courses</a>
@@ -87,7 +87,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 pt-8 mt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
-            <p>&copy; 2026 DigitalskillSathi. Designed & Developed By Recline Media.</p>
+            <p>&copy; 2026 DigitalskillSathi. All rights reserved.</p>
             <div className="flex gap-6">
               <button
                 onClick={() => handleNavigateToPolicy("privacy-policy")}

@@ -63,6 +63,13 @@ export function Header({ onLoginClick, onSignupClick }: HeaderProps) {
         {isLoggedIn && (
           <nav className="hidden md:flex items-center gap-6">
             <button
+              onClick={() => handleNavClick("/about")}
+              className="text-sm font-medium hover:text-orange-600 transition-colors"
+            >
+              About
+            </button>
+
+            <button
               onClick={() => handleNavClick("/my-courses")}
               className="text-sm font-medium hover:text-orange-600 transition-colors"
             >
@@ -76,6 +83,31 @@ export function Header({ onLoginClick, onSignupClick }: HeaderProps) {
               Payment History
             </button>
 
+            <button
+              onClick={() => handleNavClick("/settings")}
+              className="text-sm font-medium hover:text-orange-600 transition-colors"
+            >
+              Settings
+            </button>
+
+            <a
+              href="#contact"
+              className="text-sm font-medium hover:text-orange-600 transition-colors"
+            >
+              Contact Us
+            </a>
+
+            <Button 
+              className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-sm" 
+              onClick={handleLogout}
+            >
+              Logout
+            </Button>
+          </nav>
+        )}
+
+        {!isLoggedIn && (
+          <div className="hidden md:flex items-center gap-6">
             <a
               href="#about"
               className="text-sm font-medium hover:text-orange-600 transition-colors"
@@ -90,24 +122,6 @@ export function Header({ onLoginClick, onSignupClick }: HeaderProps) {
               Contact Us
             </a>
 
-            <button
-              onClick={() => handleNavClick("/settings")}
-              className="text-sm font-medium hover:text-orange-600 transition-colors"
-            >
-              Settings
-            </button>
-
-            <Button 
-              className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-sm" 
-              onClick={handleLogout}
-            >
-              Logout
-            </Button>
-          </nav>
-        )}
-
-        {!isLoggedIn && (
-          <div className="hidden md:flex items-center gap-3">
             <Button variant="ghost" className="text-sm" onClick={onLoginClick}>
               Login
             </Button>
@@ -138,6 +152,14 @@ export function Header({ onLoginClick, onSignupClick }: HeaderProps) {
 
             {isLoggedIn ? (
               <>
+                <a
+                  href="#about"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="text-sm font-medium hover:text-orange-600 transition-colors"
+                >
+                  About
+                </a>
+
                 <button
                   onClick={() => handleNavClick("/my-courses")}
                   className="text-sm font-medium text-left hover:text-orange-600 transition-colors"
@@ -152,6 +174,29 @@ export function Header({ onLoginClick, onSignupClick }: HeaderProps) {
                   Payment History
                 </button>
 
+                <button
+                  onClick={() => handleNavClick("/settings")}
+                  className="text-sm font-medium text-left hover:text-orange-600 transition-colors"
+                >
+                  Settings
+                </button>
+
+                <a
+                  href="#contact"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="text-sm font-medium hover:text-orange-600 transition-colors"
+                >
+                  Contact Us
+                </a>
+
+                <div className="pt-4 border-t">
+                  <Button className="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700" onClick={handleLogout}>
+                    Logout
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <>
                 <a
                   href="#about"
                   onClick={() => setIsMenuOpen(false)}
@@ -168,21 +213,6 @@ export function Header({ onLoginClick, onSignupClick }: HeaderProps) {
                   Contact Us
                 </a>
 
-                <button
-                  onClick={() => handleNavClick("/settings")}
-                  className="text-sm font-medium text-left hover:text-orange-600 transition-colors"
-                >
-                  Settings
-                </button>
-
-                <div className="pt-4 border-t">
-                  <Button className="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700" onClick={handleLogout}>
-                    Logout
-                  </Button>
-                </div>
-              </>
-            ) : (
-              <>
                 <Button variant="ghost" className="w-full" onClick={onLoginClick}>
                   Login
                 </Button>
