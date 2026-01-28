@@ -9,20 +9,40 @@ import { Hero } from "./components/Hero";
 import { LoginModal } from "./components/LoginModal";
 import { SignupModal } from "./components/SignupModal";
 import { Testimonials } from "./components/Testimonials";
+import { PrivacyPolicy } from "./pages/PrivacyPolicy";
+import { RefundPolicy } from "./pages/RefundPolicy";
+import { TermsOfService } from "./pages/TermsOfService";
 
 export default function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState<string>("/");
   const featuredCoursesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Handle route changes
-    const path = window.location.pathname;
-    if (path === "/login") {
-      setIsLoginOpen(true);
-    } else if (path === "/signup") {
-      setIsSignupOpen(true);
-    }
+    const handleNavigation = () => {
+      const path = window.location.pathname;
+      setCurrentPage(path);
+
+      if (path === "/login") {
+        setIsLoginOpen(true);
+      } else if (path === "/signup") {
+        setIsSignupOpen(true);
+      } else {
+        setIsLoginOpen(false);
+        setIsSignupOpen(false);
+      }
+    };
+
+    handleNavigation();
+
+    window.addEventListener("navigate", handleNavigation);
+    window.addEventListener("popstate", handleNavigation);
+
+    return () => {
+      window.removeEventListener("navigate", handleNavigation);
+      window.removeEventListener("popstate", handleNavigation);
+    };
   }, []);
 
   const handleLoginClick = () => {
@@ -51,11 +71,23 @@ export default function App() {
     }
   };
 
+  if (currentPage === "/privacy-policy") {
+    return <PrivacyPolicy />;
+  }
+
+  if (currentPage === "/terms-of-service") {
+    return <TermsOfService />;
+  }
+
+  if (currentPage === "/refund-policy") {
+    return <RefundPolicy />;
+  }
+
   return (
     <div className="min-h-screen bg-white">
       <Header onLoginClick={handleLoginClick} onSignupClick={handleSignupClick} />
       <main>
-        <Hero />
+        <Hero onExploreCourses={handleExploreCourses} />
         <Categories onExploreCourses={handleExploreCourses} />
         <div ref={featuredCoursesRef}>
           <FeaturedCourses />

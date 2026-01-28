@@ -1,7 +1,11 @@
 import { Button } from "@/app/components/ui/button";
 import { Play } from "lucide-react";
 
-export function Hero() {
+interface HeroProps {
+  onExploreCourses?: () => void;
+}
+
+export function Hero({ onExploreCourses }: HeroProps) {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-orange-50 via-red-50 to-white">
       <div className="container mx-auto px-4 py-16 md:py-24">
@@ -23,6 +27,7 @@ export function Hero() {
               <Button 
                 size="lg" 
                 className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-base px-8"
+                onClick={onExploreCourses}
               >
                 Explore Courses
               </Button>

@@ -1,6 +1,11 @@
 import { CourseCard } from "@/app/components/CourseCard";
 import { Button } from "@/app/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/app/components/ui/tabs";
 
 const courses = [
   {
@@ -95,6 +100,12 @@ const courses = [
   },
 ];
 
+const triggerBase =
+  "rounded-full text-sm font-medium transition-all " +
+  "text-gray-700 hover:text-orange-600 " +
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/30 " +
+  "data-[state=active]:bg-white data-[state=active]:text-orange-600 data-[state=active]:shadow-sm";
+
 export function FeaturedCourses() {
   return (
     <section id="courses" className="py-16 md:py-24 bg-white">
@@ -113,52 +124,65 @@ export function FeaturedCourses() {
         </div>
 
         <Tabs defaultValue="all" className="w-full">
-        <div className="-mx-4 px-4 w-full max-w-2xl mx-auto mb-8">
-  <TabsList
-    className="
-      w-full
-      flex md:grid md:grid-cols-5
-      gap-2
-      bg-transparent p-0
-      overflow-x-auto md:overflow-visible
-      whitespace-nowrap
-      px-1
-      scroll-px-2
-      [-ms-overflow-style:none]
-      [scrollbar-width:none]
-      [&::-webkit-scrollbar]:hidden
-    "
-  >
-    <TabsTrigger
-      value="all"
-      className="shrink-0 rounded-full px-4 py-2 text-sm"
-    >
-      All
-    </TabsTrigger>
+          <div className="w-full max-w-3xl mx-auto mb-8">
+            <TabsList
+              className="
+                w-full
+                flex
+                items-center justify-center
+                gap-1 md:gap-2
 
-    <TabsTrigger value="web" className="shrink-0 rounded-full px-4 py-2 text-sm">
-      Web Dev
-    </TabsTrigger>
+                rounded-full
+                border
+                bg-white
+                p-1 md:p-1.5
 
-    <TabsTrigger value="data" className="shrink-0 rounded-full px-4 py-2 text-sm">
-      Data Science
-    </TabsTrigger>
+                shadow-sm
 
-    <TabsTrigger
-      value="marketing"
-      className="shrink-0 rounded-full px-4 py-2 text-sm"
-    >
-      Marketing
-    </TabsTrigger>
+                overflow-x-auto md:overflow-hidden
+                whitespace-nowrap
 
-    <TabsTrigger
-      value="design"
-      className="shrink-0 rounded-full px-4 py-2 text-sm"
-    >
-      Design
-    </TabsTrigger>
-  </TabsList>
-</div>
+                [scrollbar-width:none]
+                [-ms-overflow-style:none]
+                [&::-webkit-scrollbar]:hidden
+              "
+            >
+              <TabsTrigger
+                value="all"
+                className={`${triggerBase} px-2 py-1.5 md:px-4 md:py-2 min-w-fit md:flex-1 text-xs md:text-sm`}
+              >
+                All
+              </TabsTrigger>
+
+              <TabsTrigger
+                value="web"
+                className={`${triggerBase} px-2 py-1.5 md:px-4 md:py-2 min-w-fit md:flex-1 text-xs md:text-sm`}
+              >
+                Web Dev
+              </TabsTrigger>
+
+              <TabsTrigger
+                value="data"
+                className={`${triggerBase} px-2 py-1.5 md:px-4 md:py-2 min-w-fit md:flex-1 text-xs md:text-sm`}
+              >
+                Data Science
+              </TabsTrigger>
+
+              <TabsTrigger
+                value="marketing"
+                className={`${triggerBase} px-2 py-1.5 md:px-4 md:py-2 min-w-fit md:flex-1 text-xs md:text-sm`}
+              >
+                Marketing
+              </TabsTrigger>
+
+              <TabsTrigger
+                value="design"
+                className={`${triggerBase} px-2 py-1.5 md:px-4 md:py-2 min-w-fit md:flex-1 text-xs md:text-sm`}
+              >
+                Design
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
           <TabsContent value="all">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

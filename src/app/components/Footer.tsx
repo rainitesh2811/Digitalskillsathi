@@ -1,6 +1,11 @@
 import { Instagram, Mail, MapPin, Phone, Youtube } from "lucide-react";
 
 export function Footer() {
+  const handleNavigateToPolicy = (page: string) => {
+    window.history.pushState({}, "", `/${page}`);
+    window.dispatchEvent(new Event("navigate"));
+  };
+
   return (
     <footer id="contact" className="bg-gray-900 text-gray-300">
       <div className="container mx-auto px-4 py-12 md:py-16">
@@ -65,7 +70,7 @@ export function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
-                <span>Near Rozana Office, Gomtinagar Lucknow, Uttar Pradesh 226028</span>
+                <span>4/185 Virat Khand, Gomti Nagar, Lucknow- 226010</span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-orange-400 flex-shrink-0" />
@@ -84,9 +89,24 @@ export function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
             <p>&copy; 2026 DigitalskillSathi. All rights reserved.</p>
             <div className="flex gap-6">
-              <a href="#" className="hover:text-orange-400 transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-orange-400 transition-colors">Terms of Service</a>
-              <a href="#" className="hover:text-orange-400 transition-colors">Cookie Policy</a>
+              <button
+                onClick={() => handleNavigateToPolicy("privacy-policy")}
+                className="hover:text-orange-400 transition-colors cursor-pointer"
+              >
+                Privacy Policy
+              </button>
+              <button
+                onClick={() => handleNavigateToPolicy("terms-of-service")}
+                className="hover:text-orange-400 transition-colors cursor-pointer"
+              >
+                Terms of Service
+              </button>
+              <button
+                onClick={() => handleNavigateToPolicy("refund-policy")}
+                className="hover:text-orange-400 transition-colors cursor-pointer"
+              >
+                Refund Policy
+              </button>
             </div>
           </div>
         </div>
