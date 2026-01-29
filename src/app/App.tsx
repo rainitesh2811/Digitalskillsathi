@@ -11,6 +11,7 @@ import { LoginModal } from "./components/LoginModal";
 import { SignupModal } from "./components/SignupModal";
 import { Testimonials } from "./components/Testimonials";
 import { AboutUs } from "./pages/AboutUs";
+import { ContactUs } from "./pages/ContactUs";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { RefundPolicy } from "./pages/RefundPolicy";
 import { TermsOfService } from "./pages/TermsOfService";
@@ -87,6 +88,7 @@ export default function App() {
   if (currentPage === "/terms-of-service") return <TermsOfService />;
   if (currentPage === "/refund-policy") return <RefundPolicy />;
   if (currentPage === "/about") return <AboutUs />;
+  if (currentPage === "/contact") return <ContactUs />;
 
   return (
     <div className="min-h-screen bg-white">

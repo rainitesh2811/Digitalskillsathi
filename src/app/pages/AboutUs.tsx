@@ -1,18 +1,28 @@
-import { Facebook, Instagram, Linkedin, Twitter, Youtube, GraduationCap, BookOpen, Users, Award, Landmark, ArrowLeft } from "lucide-react";
+import {
+  ArrowLeft,
+  Award,
+  BookOpen,
+  Facebook,
+  GraduationCap,
+  Instagram,
+  Landmark,
+  Linkedin,
+  Twitter,
+  Users,
+  Youtube
+} from "lucide-react";
 
 export function AboutUs() {
   const socialLinks = [
-    { name: "FACEBOOK", icon: <Facebook className="w-4 h-4" />, url: "https://facebook.com" },
-    { name: "TWITTER", icon: <Twitter className="w-4 h-4" />, url: "https://twitter.com" },
-    { name: "INSTAGRAM", icon: <Instagram className="w-4 h-4" />, url: "https://instagram.com" },
-    { name: "YOUTUBE", icon: <Youtube className="w-4 h-4" />, url: "https://youtube.com" },
-    { name: "LINKEDIN", icon: <Linkedin className="w-4 h-4" />, url: "https://linkedin.com" },
+    { name: "FACEBOOK", icon: <Facebook className="w-4 h-4" />, url: "#" },
+    { name: "TWITTER", icon: <Twitter className="w-4 h-4" />, url: "#" },
+    { name: "INSTAGRAM", icon: <Instagram className="w-4 h-4" />, url: "https://www.instagram.com/digitalskillsathi/?hl=en" },
+    { name: "YOUTUBE", icon: <Youtube className="w-4 h-4" />, url: "https://www.youtube.com/@digitalskillsathi?si=FNwUZNjRtjeaNK8F" },
+    { name: "LINKEDIN", icon: <Linkedin className="w-4 h-4" />, url: "#" },
   ];
 
-  // Manual navigation function to work with your App.tsx logic
   const navigateHome = () => {
     window.history.pushState({}, "", "/");
-    // Dispatch a popstate event so App.tsx effect picks up the change
     window.dispatchEvent(new PopStateEvent('popstate'));
   };
 
@@ -32,11 +42,10 @@ export function AboutUs() {
         </button>
       </nav>
 
-      {/* SECTION 1: HERO COLLAGE */}
+      {/* SECTION 1: HERO */}
       <section className="pt-24 md:pt-32 pb-16 px-4">
         <div className="container mx-auto max-w-7xl">
           <div className="relative">
-            {/* Firm Identity */}
             <div className="flex items-center gap-3 mb-8 text-orange-600 font-bold tracking-[0.3em] text-[10px] md:text-xs uppercase">
               <Landmark className="w-4 h-4" />
               <span>Digital Skill Sathi • Educational Practice</span>
@@ -58,66 +67,73 @@ export function AboutUs() {
               </div>
               
               <div className="md:col-span-4 flex flex-col gap-8 md:pt-24 relative z-20">
-                 <div className="bg-slate-950 p-8 text-white rounded-sm shadow-2xl border-l-4 border-orange-600 transform active:scale-95 transition-transform md:-ml-20">
+                <div className="bg-slate-950 p-8 text-white rounded-sm shadow-2xl border-l-4 border-orange-600 transform active:scale-95 transition-transform md:-ml-20">
                     <h3 className="text-xl font-bold uppercase mb-4 flex items-center gap-2">
                         <GraduationCap className="text-orange-500" /> Our Mission
                     </h3>
                     <p className="text-slate-300 leading-relaxed text-sm md:text-base font-light">
                         To serve as a premier educational firm specializing in high-demand digital literacies, empowering the modern workforce through rigorous certification and mentorship.
                     </p>
-                 </div>
-                 <div className="relative group overflow-hidden">
+                </div>
+                <div className="relative group overflow-hidden">
                     <img 
                         src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80" 
                         className="w-full h-[200px] object-cover rounded-sm shadow-md transition-transform duration-700 group-hover:scale-110"
                         alt="Workshop" 
                     />
                     <div className="absolute inset-0 bg-orange-600/10 mix-blend-multiply"></div>
-                 </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* SECTION 2: FOUNDERS */}
-      <section className="py-20 md:py-32 bg-slate-50 border-y border-slate-100">
-        <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tight mb-4 italic">Founding Partners</h2>
-            <div className="h-[2px] w-32 bg-gradient-to-r from-orange-600 to-red-600 mx-auto mb-20"></div>
+{/* SECTION 2: FOUNDERS */}
+<section className="py-20 md:py-32 bg-slate-50 border-y border-slate-100">
+  <div className="container mx-auto px-4">
+    {/* Section Header */}
+    <div className="text-center mb-24">
+      <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tight mb-4 italic">Founding Partners</h2>
+      <div className="h-[2px] w-32 bg-gradient-to-r from-orange-600 to-red-600 mx-auto"></div>
+    </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-32 max-w-5xl mx-auto items-start text-left">
-            <div className="group relative active:scale-[0.98] transition-all duration-500">
-              <div className="relative overflow-hidden rounded-sm aspect-[4/5] shadow-2xl grayscale transition-all duration-700 group-hover:grayscale-0">
-                <img 
-                  src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80" 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  alt="Jay Britto"
-                />
-              </div>
-              <div className="mt-8">
-                <h4 className="text-2xl font-bold uppercase tracking-tight group-hover:text-orange-600 transition-colors">Jay Britto</h4>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Managing Director</p>
-              </div>
-            </div>
-
-            <div className="group relative active:scale-[0.98] transition-all duration-500 md:mt-40">
-              <div className="relative overflow-hidden rounded-sm aspect-[4/5] shadow-2xl grayscale transition-all duration-700 group-hover:grayscale-0">
-                <img 
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80" 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  alt="David Charette"
-                />
-              </div>
-              <div className="mt-8">
-                <h4 className="text-2xl font-bold uppercase tracking-tight group-hover:text-red-600 transition-colors">David Charette</h4>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Strategic Director</p>
-              </div>
-            </div>
-          </div>
+    {/* Founders Grid */}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 max-w-6xl mx-auto items-start">
+      
+      <div className="group relative flex flex-col items-center md:items-start transition-all duration-500 md:max-w-[85%]">
+        <div className="relative w-full h-auto overflow-hidden rounded-sm shadow-2xl bg-white border border-slate-200">
+          <img 
+            src="/image.png" 
+            className="w-full h-auto object-contain transition-all duration-700 group-hover:scale-105"
+            alt="Ravi Virat"
+          />
+          <div className="absolute inset-0 border-[10px] border-white/5 pointer-events-none"></div>
         </div>
-      </section>
+        <div className="mt-8 border-l-4 border-orange-600 pl-5 self-start">
+          <h4 className="text-2xl font-bold uppercase tracking-tighter text-slate-900">RAVI VIRAT</h4>
+          <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mt-1">FOUNDER AND PRINCIPAL</p>
+        </div>
+      </div>
 
+      <div className="group relative flex flex-col items-center md:items-start transition-all duration-500 md:pt-32">
+        <div className="relative w-full h-auto overflow-hidden rounded-sm shadow-2xl bg-white border border-slate-200">
+          <img 
+            src="/my.png" 
+            className="w-full h-auto object-contain transition-all duration-700 group-hover:scale-105"
+            alt="Nitesh Rai"
+          />
+          <div className="absolute inset-0 border-[10px] border-white/5 pointer-events-none"></div>
+        </div>
+        <div className="mt-8 border-l-4 border-red-600 pl-5 self-start">
+          <h4 className="text-2xl font-bold uppercase tracking-tighter text-slate-900">NITESH RAI</h4>
+          <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mt-1">Tech Head</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
       {/* SECTION 3: INSTITUTIONAL SERVICES */}
       <section className="py-24 md:py-40 bg-white">
         <div className="container mx-auto px-4 max-w-7xl">
@@ -163,24 +179,24 @@ export function AboutUs() {
           <p className="text-[10px] tracking-[0.6em] uppercase text-orange-500 font-black mb-12">Global Educational Network</p>
           
           <div className="flex flex-wrap justify-center gap-3 md:gap-5 max-w-4xl mx-auto">
-             {socialLinks.map((social) => (
-               <a
+            {socialLinks.map((social) => (
+              <a
                 key={social.name}
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center gap-3 border border-white/10 rounded-full px-6 py-3 md:px-10 md:py-4 transition-all duration-300 active:scale-90 hover:bg-white hover:text-slate-950"
-               >
-                 <span className="text-orange-500 transition-transform group-hover:scale-125 duration-300">{social.icon}</span>
-                 <span className="text-[10px] md:text-xs font-black tracking-widest uppercase">{social.name}</span>
-               </a>
-             ))}
+              >
+                <span className="text-orange-500 transition-transform group-hover:scale-125 duration-300">{social.icon}</span>
+                <span className="text-[10px] md:text-xs font-black tracking-widest uppercase">{social.name}</span>
+              </a>
+            ))}
           </div>
 
           <div className="mt-32 md:mt-48 pt-10 border-t border-white/5">
-             <h2 className="text-[14vw] leading-none font-black text-center tracking-tighter select-none">
-               CONTACT <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-600 tracking-[-0.1em]">+</span> US
-             </h2>
+            <h2 className="text-[14vw] leading-none font-black text-center tracking-tighter select-none">
+              CONTACT <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-600 tracking-[-0.1em]"></span> US
+            </h2>
           </div>
         </div>
       </section>

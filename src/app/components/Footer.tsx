@@ -34,6 +34,9 @@ export function Footer() {
                 <button onClick={() => handleNavigateToPolicy("about")} className="hover:text-orange-400 transition-colors cursor-pointer">About Us</button>
               </li>
               <li>
+                <button onClick={() => handleNavigateToPolicy("contact")} className="hover:text-orange-400 transition-colors cursor-pointer">Contact Us</button>
+              </li>
+              <li>
                 <a href="#courses" className="hover:text-orange-400 transition-colors">Courses</a>
               </li>
               <li>

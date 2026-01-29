@@ -116,12 +116,12 @@ export function Header({ onLoginClick, onSignupClick }: HeaderProps) {
               About
             </button>
 
-            <a
-              href="#contact"
+            <button
+              onClick={() => handleNavClick("/contact")}
               className="text-sm font-medium hover:text-orange-600 transition-colors"
             >
               Contact Us
-            </a>
+            </button>
 
             <Button variant="ghost" className="text-sm" onClick={onLoginClick}>
               Login
@@ -181,13 +181,12 @@ export function Header({ onLoginClick, onSignupClick }: HeaderProps) {
                   Settings
                 </button>
 
-                <a
-                  href="#contact"
-                  onClick={() => setIsMenuOpen(false)}
+                <button
+                  onClick={() => handleNavClick("/contact")}
                   className="text-sm font-medium hover:text-orange-600 transition-colors"
                 >
                   Contact Us
-                </a>
+                </button>
 
                 <div className="pt-4 border-t">
                   <Button className="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700" onClick={handleLogout}>
@@ -204,13 +203,12 @@ export function Header({ onLoginClick, onSignupClick }: HeaderProps) {
                   About
                 </button>
 
-                <a
-                  href="#contact"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="text-sm font-medium hover:text-orange-600 transition-colors"
+                <button
+                  onClick={() => handleNavClick("/contact")}
+                  className="text-sm font-medium text-left hover:text-orange-600 transition-colors"
                 >
                   Contact Us
-                </a>
+                </button>
 
                 <Button variant="ghost" className="w-full" onClick={onLoginClick}>
                   Login
