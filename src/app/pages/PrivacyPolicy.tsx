@@ -1,13 +1,17 @@
 import { ChevronLeft } from "lucide-react";
+import { useEffect } from "react";
 
 export function PrivacyPolicy() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="min-h-screen bg-white">
       <div className="container mx-auto px-4 py-12 md:py-16 max-w-3xl">
         <button
           onClick={() => {
             window.history.pushState({}, "", "/");
-            window.dispatchEvent(new Event("navigate"));
+            window.dispatchEvent(new PopStateEvent("popstate"));
           }}
           className="flex items-center gap-2 text-orange-600 hover:text-orange-700 mb-8"
         >

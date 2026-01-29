@@ -3,6 +3,8 @@ import { Instagram, Mail, MapPin, Phone, Youtube } from "lucide-react";
 export function Footer() {
   const handleNavigateToPolicy = (page: string) => {
     window.history.pushState({}, "", `/${page}`);
+    // Dispatch both navigate and popstate-like events for compatibility
+    window.dispatchEvent(new PopStateEvent("popstate"));
     window.dispatchEvent(new Event("navigate"));
   };
 

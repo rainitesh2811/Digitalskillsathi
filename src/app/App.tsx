@@ -49,33 +49,43 @@ export default function App() {
         setIsSignupOpen(false);
       }
     };
+    // Call immediately on component mount to handle direct URL access
     handleNavigation();
+    
+    // Listen for browser back/forward button
     window.addEventListener("popstate", handleNavigation);
-    window.addEventListener("navigate", handleNavigation);
+    
     return () => {
       window.removeEventListener("popstate", handleNavigation);
-      window.removeEventListener("navigate", handleNavigation);
     };
   }, []);
 
+  const handleNavClick = (href: string) => {
+    window.history.pushState({}, "", href);
+    // Manually trigger navigation update
+    setCurrentPage(href);
+    if (href === "/login") setIsLoginOpen(true);
+    else if (href === "/signup") setIsSignupOpen(true);
+    else {
+      setIsLoginOpen(false);
+      setIsSignupOpen(false);
+    }
+  };
+
   const handleLoginClick = () => {
-    setIsLoginOpen(true);
-    window.history.pushState({}, "", "/login");
+    handleNavClick("/login");
   };
 
   const handleSignupClick = () => {
-    setIsSignupOpen(true);
-    window.history.pushState({}, "", "/signup");
+    handleNavClick("/signup");
   };
 
   const handleCloseLogin = () => {
-    setIsLoginOpen(false);
-    window.history.pushState({}, "", "/");
+    handleNavClick("/");
   };
 
   const handleCloseSignup = () => {
-    setIsSignupOpen(false);
-    window.history.pushState({}, "", "/");
+    handleNavClick("/");
   };
 
   const handleExploreCourses = () => {
@@ -111,18 +121,14 @@ export default function App() {
         isOpen={isLoginOpen} 
         onClose={handleCloseLogin}
         onSwitchToSignup={() => {
-          setIsLoginOpen(false);
-          setIsSignupOpen(true);
-          window.history.pushState({}, "", "/signup");
+          handleNavClick("/signup");
         }}
       />
       <SignupModal 
         isOpen={isSignupOpen} 
         onClose={handleCloseSignup}
         onSwitchToLogin={() => {
-          setIsSignupOpen(false);
-          setIsLoginOpen(true);
-          window.history.pushState({}, "", "/login");
+          handleNavClick("/login");
         }}
       />
     </div>

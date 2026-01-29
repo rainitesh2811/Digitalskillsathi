@@ -11,9 +11,13 @@ import {
     Twitter,
     Youtube
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function ContactUs() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
   const [formData, setFormData] = useState({
     name: "",
     email: "",

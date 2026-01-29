@@ -11,8 +11,12 @@ import {
   Users,
   Youtube
 } from "lucide-react";
+import { useEffect } from "react";
 
 export function AboutUs() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const socialLinks = [
     { name: "FACEBOOK", icon: <Facebook className="w-4 h-4" />, url: "#" },
     { name: "TWITTER", icon: <Twitter className="w-4 h-4" />, url: "#" },

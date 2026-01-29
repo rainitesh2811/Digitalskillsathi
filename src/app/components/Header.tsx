@@ -26,7 +26,7 @@ export function Header({ onLoginClick, onSignupClick }: HeaderProps) {
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((event: any, session: any) => {
+    } = supabase.auth.onAuthStateChange((_event: any, session: any) => {
       setUser(session?.user || null);
       setIsLoggedIn(!!session?.user);
     });
@@ -43,6 +43,7 @@ export function Header({ onLoginClick, onSignupClick }: HeaderProps) {
 
   const handleNavClick = (href: string) => {
     window.history.pushState({}, "", href);
+    window.dispatchEvent(new PopStateEvent("popstate"));
     window.dispatchEvent(new Event("navigate"));
     setIsMenuOpen(false);
   };
@@ -91,12 +92,12 @@ export function Header({ onLoginClick, onSignupClick }: HeaderProps) {
               Settings
             </button>
 
-            <a
-              href="#contact"
+            <button
+              onClick={() => handleNavClick("/contact")}
               className="text-sm font-medium hover:text-orange-600 transition-colors"
             >
               Contact Us
-            </a>
+            </button>
 
             <Button 
               className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-sm" 
