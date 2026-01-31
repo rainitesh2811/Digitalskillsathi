@@ -59,7 +59,7 @@ export function Header({ onLoginClick, onSignupClick }: HeaderProps) {
           <img
             src="/logo.png"
             alt="DigitalskillSathi"
-            className="h-12 w-auto object-contain flex-shrink-0"
+            className="h-12 w-auto object-contain flex-shrink-0 drop-shadow-md rounded-lg hover:drop-shadow-lg transition-all duration-300"
           />
         </div>
         {isLoggedIn && (

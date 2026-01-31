@@ -1,8 +1,8 @@
 import { supabase } from "@/supabaseclient";
 import { useEffect, useRef, useState } from "react";
 import { Categories } from "./components/Categories";
+import { CourseCategories } from "./components/CourseCategories";
 import { CTA } from "./components/CTA";
-import { FeaturedCourses } from "./components/FeaturedCourses";
 import { Features } from "./components/Features";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
@@ -21,6 +21,7 @@ export default function App() {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState<string>("/");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string | undefined>();
   const featuredCoursesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -88,7 +89,10 @@ export default function App() {
     handleNavClick("/");
   };
 
-  const handleExploreCourses = () => {
+  const handleExploreCourses = (category?: string) => {
+    if (category) {
+      setSelectedCategory(category);
+    }
     if (featuredCoursesRef.current) {
       featuredCoursesRef.current.scrollIntoView({ behavior: 'smooth' });
     }
@@ -107,8 +111,9 @@ export default function App() {
         <Hero onExploreCourses={handleExploreCourses} />
         <Categories onExploreCourses={handleExploreCourses} />
         <div ref={featuredCoursesRef}>
-          <FeaturedCourses />
+          <CourseCategories onExploreCourses={handleExploreCourses} selectedCategory={selectedCategory} />
         </div>
+
         <Features />
         <Testimonials />
         <CTA 

@@ -1,5 +1,5 @@
-import { Button } from "@/app/components/ui/button";
-import { Play } from "lucide-react";
+import { Button } from "@/app/components/ui/button"; // Ensure this file exists and uses 'export { Button }'
+import { GraduationCap, Play } from "lucide-react";
 
 interface HeroProps {
   onExploreCourses?: () => void;
@@ -10,7 +10,9 @@ export function Hero({ onExploreCourses }: HeroProps) {
     <section className="relative overflow-hidden bg-gradient-to-br from-orange-50 via-red-50 to-white">
       <div className="container mx-auto px-4 py-16 md:py-24">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
+          
+          {/* Left Content Column */}
+          <div className="space-y-6 z-10">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
               Master Digital Skills for{" "}
               <span className="bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
@@ -26,7 +28,7 @@ export function Hero({ onExploreCourses }: HeroProps) {
             <div className="flex flex-wrap gap-4">
               <Button 
                 size="lg" 
-                className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-base px-8"
+                className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white text-base px-8"
                 onClick={onExploreCourses}
               >
                 Explore Courses
@@ -34,42 +36,43 @@ export function Hero({ onExploreCourses }: HeroProps) {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="border-2 text-base px-8 gap-2"
+                className="border-2 border-orange-200 text-orange-700 hover:bg-orange-50 text-base px-8 gap-2"
               >
-                <Play className="h-5 w-5" />
+                <Play className="h-5 w-5 fill-current" />
                 Watch Demo
               </Button>
             </div>
           </div>
 
-          {/* Right Image */}
+          {/* Right Image Column */}
           <div className="relative">
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+            {/* Main Image Wrapper */}
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
               <img
-                src="https://images.unsplash.com/photo-1762330910399-95caa55acf04?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxvbmxpbmUlMjBsZWFybmluZyUyMGVkdWNhdGlvbnxlbnwxfHx8fDE3NjkwNzQ1MzN8MA&ixlib=rb-4.1.0&q=80&w=1080"
-                alt="Online Learning"
-                className="w-full h-auto"
+                src="/hero.png" 
+                alt="Student learning online"
+                className="w-full h-auto object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-tr from-orange-600/20 to-red-600/20"></div>
+              {/* Decorative Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-orange-600/10 to-transparent"></div>
             </div>
             
-            {/* Floating Cards */}
-            <div className="absolute -bottom-6 -left-6 bg-white rounded-xl shadow-lg p-4 max-w-xs hidden lg:block">
+            {/* Floating Card */}
+            <div className="absolute -bottom-10 -left-6 bg-white rounded-xl shadow-xl p-4 max-w-xs hidden lg:block animate-bounce-subtle">
               <div className="flex items-center gap-3">
-                <div className="h-12 w-12 rounded-full bg-gradient-to-br from-orange-600 to-red-600 flex items-center justify-center text-white">
-                  <span className="text-xl">🎓</span>
+                <div className="h-12 w-12 rounded-full bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-white shadow-inner">
+                  <GraduationCap className="h-6 w-6" />
                 </div>
                 <div>
-                  <div className="font-semibold">New Course Alert!</div>
-                  <div className="text-sm text-gray-600">Advanced React Patterns</div>
+                  <div className="font-bold text-gray-900">New Course Alert!</div>
+                  <div className="text-sm text-gray-600">Advanced Artificial Intelligence</div>
                 </div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
-      
-      {/* Background Decoration */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-orange-200 rounded-full blur-3xl opacity-20 -z-10"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-red-200 rounded-full blur-3xl opacity-20 -z-10"></div>
     </section>

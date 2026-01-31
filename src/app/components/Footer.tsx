@@ -3,7 +3,6 @@ import { Instagram, Mail, MapPin, Phone, Youtube } from "lucide-react";
 export function Footer() {
   const handleNavigateToPolicy = (page: string) => {
     window.history.pushState({}, "", `/${page}`);
-    // Dispatch both navigate and popstate-like events for compatibility
     window.dispatchEvent(new PopStateEvent("popstate"));
     window.dispatchEvent(new Event("navigate"));
   };
@@ -14,7 +13,7 @@ export function Footer() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <img src="/logo.png" alt="DigitalskillSathi" className="h-24 w-30 object-contain" />
+              <img src="/logo1.png" alt="DigitalskillSathi" className="h-24 w-30 object-contain" />
             </div>
             <p className="text-sm mb-4">
               Empowering learners with quality online education and practical skills for the digital age.
@@ -92,7 +91,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 pt-8 mt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
-            <p>&copy; 2026 DigitalskillSathi. All rights reserved.</p>
+            <p>&copy; 2026 DigitalskillSathi. Designed & Developed By Recline Media. </p>
             <div className="flex gap-6">
               <button
                 onClick={() => handleNavigateToPolicy("privacy-policy")}

@@ -115,8 +115,8 @@ export function AboutUs() {
           <div className="absolute inset-0 border-[10px] border-white/5 pointer-events-none"></div>
         </div>
         <div className="mt-8 border-l-4 border-orange-600 pl-5 self-start">
-          <h4 className="text-2xl font-bold uppercase tracking-tighter text-slate-900">RAVI VIRAT</h4>
-          <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mt-1">FOUNDER AND PRINCIPAL</p>
+          <h4 className="text-2xl font-bold uppercase tracking-tighter text-slate-900">RAVVI VIRAT</h4>
+          <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mt-1">FOUNDER</p>
         </div>
       </div>
 
