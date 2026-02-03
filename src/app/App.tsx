@@ -12,9 +12,68 @@ import { SignupModal } from "./components/SignupModal";
 import { Testimonials } from "./components/Testimonials";
 import { AboutUs } from "./pages/AboutUs";
 import { ContactUs } from "./pages/ContactUs";
+import { CourseDetails } from "./pages/CourseDetails";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { RefundPolicy } from "./pages/RefundPolicy";
 import { TermsOfService } from "./pages/TermsOfService";
+
+interface Course {
+  id: number;
+  title: string;
+  icon: string;
+  category: string;
+}
+
+const allCourses: Course[] = [
+  {
+    id: 1,
+    title: "Advanced Basic AI",
+    icon: "/1.png",
+    category: "Artificial Intelligence",
+  },
+  {
+    id: 2,
+    title: "Basic AI",
+    icon: "/2.png",
+    category: "Artificial Intelligence",
+  },
+  {
+    id: 3,
+    title: "Canva Fundamentals",
+    icon: "/3.png",
+    category: "Design",
+  },
+  {
+    id: 4,
+    title: "Canva Advanced",
+    icon: "/4.png",
+    category: "Design",
+  },
+  {
+    id: 5,
+    title: "Web Development",
+    icon: "/5.png",
+    category: "Web Dev",
+  },
+  {
+    id: 6,
+    title: "Wordpress",
+    icon: "/6.png",
+    category: "Web Dev",
+  },
+  {
+    id: 7,
+    title: "Digital Marketing Basics",
+    icon: "/7.png",
+    category: "Marketing",
+  },
+  {
+    id: 8,
+    title: "Digital Marketing Advanced",
+    icon: "/8.png",
+    category: "Marketing",
+  },
+];
 
 export default function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -22,6 +81,7 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState<string>("/");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>();
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const featuredCoursesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -33,19 +93,38 @@ export default function App() {
     checkAuth();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setIsLoggedIn(!!session?.user);
+      const isUserLoggedIn = !!session?.user;
+      setIsLoggedIn(isUserLoggedIn);
+      
+      // If user logs out and is on course page, redirect to home
+      if (!isUserLoggedIn && currentPage.startsWith("/course/")) {
+        handleNavClick("/");
+      }
     });
 
     return () => subscription?.unsubscribe();
-  }, []);
+  }, [currentPage]);
 
   useEffect(() => {
     const handleNavigation = () => {
       const path = window.location.pathname;
       setCurrentPage(path);
-      if (path === "/login") setIsLoginOpen(true);
-      else if (path === "/signup") setIsSignupOpen(true);
-      else {
+      
+      if (path.startsWith("/course/")) {
+        const courseId = parseInt(path.split("/course/")[1]);
+        const course = allCourses.find(c => c.id === courseId);
+        if (course) {
+          setSelectedCourse(course);
+        }
+      }
+      
+      if (path === "/login") {
+        setIsLoginOpen(true);
+        setIsSignupOpen(false);
+      } else if (path === "/signup") {
+        setIsSignupOpen(true);
+        setIsLoginOpen(false);
+      } else {
         setIsLoginOpen(false);
         setIsSignupOpen(false);
       }
@@ -65,9 +144,13 @@ export default function App() {
     window.history.pushState({}, "", href);
     // Manually trigger navigation update
     setCurrentPage(href);
-    if (href === "/login") setIsLoginOpen(true);
-    else if (href === "/signup") setIsSignupOpen(true);
-    else {
+    if (href === "/login") {
+      setIsLoginOpen(true);
+      setIsSignupOpen(false);
+    } else if (href === "/signup") {
+      setIsSignupOpen(true);
+      setIsLoginOpen(false);
+    } else {
       setIsLoginOpen(false);
       setIsSignupOpen(false);
     }
@@ -82,11 +165,11 @@ export default function App() {
   };
 
   const handleCloseLogin = () => {
-    handleNavClick("/");
+    setIsLoginOpen(false);
   };
 
   const handleCloseSignup = () => {
-    handleNavClick("/");
+    setIsSignupOpen(false);
   };
 
   const handleExploreCourses = (category?: string) => {
@@ -98,11 +181,50 @@ export default function App() {
     }
   };
 
+  const handleCourseSelect = (course: Course) => {
+    if (!isLoggedIn) {
+      setIsSignupOpen(true);
+      return;
+    }
+    setSelectedCourse(course);
+    handleNavClick(`/course/${course.id}`);
+  };
+
+  const handleGoBackFromDetails = () => {
+    setSelectedCourse(null);
+    handleNavClick("/");
+  };
+
   if (currentPage === "/privacy-policy") return <PrivacyPolicy />;
   if (currentPage === "/terms-of-service") return <TermsOfService />;
   if (currentPage === "/refund-policy") return <RefundPolicy />;
   if (currentPage === "/about") return <AboutUs />;
   if (currentPage === "/contact") return <ContactUs />;
+  
+  // Handle course details page - extract course ID from URL
+  if (currentPage.startsWith("/course/")) {
+    return (
+      <>
+        <Header onLoginClick={handleLoginClick} onSignupClick={handleSignupClick} />
+        <CourseDetails course={selectedCourse} onGoBack={handleGoBackFromDetails} />
+        <Footer />
+        <LoginModal 
+          isOpen={isLoginOpen} 
+          onClose={handleCloseLogin}
+          onSwitchToSignup={() => {
+            handleNavClick("/signup");
+          }}
+        />
+        <SignupModal 
+          isOpen={isSignupOpen} 
+          onClose={handleCloseSignup}
+          onSwitchToLogin={() => {
+            handleNavClick("/login");
+          }}
+        />
+      </>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -111,7 +233,7 @@ export default function App() {
         <Hero onExploreCourses={handleExploreCourses} />
         <Categories onExploreCourses={handleExploreCourses} />
         <div ref={featuredCoursesRef}>
-          <CourseCategories onExploreCourses={handleExploreCourses} selectedCategory={selectedCategory} />
+          <CourseCategories onExploreCourses={handleExploreCourses} selectedCategory={selectedCategory} onCourseSelect={handleCourseSelect} />
         </div>
 
         <Features />

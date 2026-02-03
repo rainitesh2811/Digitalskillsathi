@@ -1,11 +1,11 @@
 import { Card } from "@/app/components/ui/card";
-import { Briefcase, Code, Database, Palette, Smartphone, TrendingUp } from "lucide-react";
+import { Brain, Code, Database, Palette, Smartphone, TrendingUp } from "lucide-react";
 
 const categories = [
   {
     icon: Code,
     title: "Web Development",
-    courses: 45,
+    courses: 2,
     color: "from-purple-500 to-purple-600",
     bgColor: "bg-purple-50",
     iconColor: "text-purple-600",
@@ -13,7 +13,7 @@ const categories = [
   {
     icon: Database,
     title: "Data Science",
-    courses: 32,
+    courses: 0,
     color: "from-blue-500 to-blue-600",
     bgColor: "bg-blue-50",
     iconColor: "text-blue-600",
@@ -21,7 +21,7 @@ const categories = [
   {
     icon: TrendingUp,
     title: "Digital Marketing",
-    courses: 28,
+    courses: 2,
     color: "from-green-500 to-green-600",
     bgColor: "bg-green-50",
     iconColor: "text-green-600",
@@ -29,7 +29,7 @@ const categories = [
   {
     icon: Palette,
     title: "Design & Creative",
-    courses: 38,
+    courses: 2,
     color: "from-pink-500 to-pink-600",
     bgColor: "bg-pink-50",
     iconColor: "text-pink-600",
@@ -37,15 +37,15 @@ const categories = [
   {
     icon: Smartphone,
     title: "Mobile Development",
-    courses: 24,
+    courses: 0,
     color: "from-orange-500 to-orange-600",
     bgColor: "bg-orange-50",
     iconColor: "text-orange-600",
   },
   {
-    icon: Briefcase,
-    title: "Business & Finance",
-    courses: 19,
+    icon: Brain,
+    title: "Artificial Intelligence",
+    courses: 2,
     color: "from-indigo-500 to-indigo-600",
     bgColor: "bg-indigo-50",
     iconColor: "text-indigo-600",

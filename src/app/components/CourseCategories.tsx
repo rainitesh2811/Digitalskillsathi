@@ -1,8 +1,21 @@
 "use client";
 import { Card } from "@/app/components/ui/card";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-const courseCategories = [
+interface CourseCategory {
+  id: number;
+  title: string;
+  icon: string;
+  category: string;
+}
+
+interface CourseCategoriesProps {
+  onExploreCourses?: (category?: string) => void;
+  selectedCategory?: string;
+  onCourseSelect?: (course: CourseCategory) => void;
+}
+
+const courseCategories: CourseCategory[] = [
   {
     id: 1,
     title: "Advanced Basic AI",
@@ -39,11 +52,23 @@ const courseCategories = [
     icon: "/6.png",
     category: "Web Dev",
   },
+  {
+    id: 7,
+    title: "Digital Marketing Basics",
+    icon: "/7.png",
+    category: "Marketing",
+  },
+  {
+    id: 8,
+    title: "Digital Marketing Advanced",
+    icon: "/8.png",
+    category: "Marketing",
+  },
 ];
 
 const filterOptions = ["All", "Web Dev", "Data Science", "Marketing", "Design"];
 
-export function CourseCategories() {
+export function CourseCategories({ onCourseSelect }: CourseCategoriesProps) {
   const [activeTab, setActiveTab] = useState("All");
   const [isVisible, setIsVisible] = useState(false);
 
@@ -54,6 +79,12 @@ export function CourseCategories() {
   const filteredCategories = activeTab === "All"
     ? courseCategories
     : courseCategories.filter((cat) => cat.category === activeTab);
+
+  const handleCourseClick = (course: CourseCategory) => {
+    if (onCourseSelect) {
+      onCourseSelect(course);
+    }
+  };
 
   return (
     <section className="py-10 md:py-20 bg-white overflow-hidden">
@@ -83,6 +114,7 @@ export function CourseCategories() {
           {filteredCategories.map((category, index) => (
             <Card
               key={category.id}
+              onClick={() => handleCourseClick(category)}
               style={{ transitionDelay: `${index * 100}ms` }}
               className={`group p-0 transition-all duration-500 cursor-pointer border-none shadow-none hover:shadow-2xl hover:scale-105 rounded-[2rem] md:rounded-[3.5rem] bg-white flex flex-col items-center justify-center overflow-hidden ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
             >
