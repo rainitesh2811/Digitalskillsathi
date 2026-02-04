@@ -10,12 +10,14 @@ import { Hero } from "./components/Hero";
 import { LoginModal } from "./components/LoginModal";
 import { SignupModal } from "./components/SignupModal";
 import { Testimonials } from "./components/Testimonials";
+import { Button } from "./components/ui/button";
 import { AboutUs } from "./pages/AboutUs";
 import { ContactUs } from "./pages/ContactUs";
 import { CourseDetails } from "./pages/CourseDetails";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { RefundPolicy } from "./pages/RefundPolicy";
 import { TermsOfService } from "./pages/TermsOfService";
+import MyCourses from "./pages/MyCourses";
 
 interface Course {
   id: number;
@@ -144,6 +146,12 @@ export default function App() {
     window.history.pushState({}, "", href);
     // Manually trigger navigation update
     setCurrentPage(href);
+    // If navigating to protected route and not logged in, prompt signup/login
+    if (href === "/my-courses" && !isLoggedIn) {
+      setIsSignupOpen(true);
+      setIsLoginOpen(false);
+      return;
+    }
     if (href === "/login") {
       setIsLoginOpen(true);
       setIsSignupOpen(false);
@@ -200,6 +208,41 @@ export default function App() {
   if (currentPage === "/refund-policy") return <RefundPolicy />;
   if (currentPage === "/about") return <AboutUs />;
   if (currentPage === "/contact") return <ContactUs />;
+  
+  // Handle My Courses route
+  if (currentPage === "/my-courses") {
+    if (!isLoggedIn) {
+      // Not logged in: show header and prompt signup/login modal
+      return (
+        <>
+          <Header onLoginClick={handleLoginClick} onSignupClick={handleSignupClick} />
+          <div className="min-h-screen flex items-center justify-center">
+            <div className="text-center">
+              <p className="text-lg text-gray-700 mb-4">Please log in or sign up to view your courses.</p>
+              <div className="flex items-center justify-center gap-4">
+                <Button variant="ghost" onClick={handleLoginClick}>Login</Button>
+                <Button onClick={handleSignupClick}>Sign Up</Button>
+              </div>
+            </div>
+          </div>
+          <Footer />
+          <LoginModal isOpen={isLoginOpen} onClose={handleCloseLogin} onSwitchToSignup={() => handleNavClick("/signup")} />
+          <SignupModal isOpen={isSignupOpen} onClose={handleCloseSignup} onSwitchToLogin={() => handleNavClick("/login")} />
+        </>
+      );
+    }
+
+    // Logged in: render MyCourses
+    return (
+      <>
+        <Header onLoginClick={handleLoginClick} onSignupClick={handleSignupClick} />
+        <MyCourses />
+        <Footer />
+        <LoginModal isOpen={isLoginOpen} onClose={handleCloseLogin} onSwitchToSignup={() => handleNavClick("/signup")} />
+        <SignupModal isOpen={isSignupOpen} onClose={handleCloseSignup} onSwitchToLogin={() => handleNavClick("/login")} />
+      </>
+    );
+  }
   
   // Handle course details page - extract course ID from URL
   if (currentPage.startsWith("/course/")) {
