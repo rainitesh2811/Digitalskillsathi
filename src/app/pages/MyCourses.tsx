@@ -30,6 +30,8 @@ export default function MyCourses() {
     let mounted = true;
     const load = async () => {
       setLoading(true);
+      // Scroll to top of page when component mounts
+      window.scrollTo(0, 0);
       const { data: userData } = await supabase.auth.getUser();
       const user = userData?.user || null;
       if (!user) {

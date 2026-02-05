@@ -14,10 +14,10 @@ import { Button } from "./components/ui/button";
 import { AboutUs } from "./pages/AboutUs";
 import { ContactUs } from "./pages/ContactUs";
 import { CourseDetails } from "./pages/CourseDetails";
+import MyCourses from "./pages/MyCourses";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { RefundPolicy } from "./pages/RefundPolicy";
 import { TermsOfService } from "./pages/TermsOfService";
-import MyCourses from "./pages/MyCourses";
 
 interface Course {
   id: number;
@@ -98,8 +98,8 @@ export default function App() {
       const isUserLoggedIn = !!session?.user;
       setIsLoggedIn(isUserLoggedIn);
       
-      // If user logs out and is on course page, redirect to home
-      if (!isUserLoggedIn && currentPage.startsWith("/course/")) {
+      // If user logs out and is on course page or my-courses page, redirect to home
+      if (!isUserLoggedIn && (currentPage.startsWith("/course/") || currentPage === "/my-courses")) {
         handleNavClick("/");
       }
     });
