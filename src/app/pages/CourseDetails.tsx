@@ -12,9 +12,10 @@ interface Course {
 interface CourseDetailsProps {
   course: Course | null;
   onGoBack: () => void;
+  onEnrollClick?: () => void;
 }
 
-export function CourseDetails({ course, onGoBack }: CourseDetailsProps) {
+export function CourseDetails({ course, onGoBack, onEnrollClick }: CourseDetailsProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -37,10 +38,10 @@ export function CourseDetails({ course, onGoBack }: CourseDetailsProps) {
   const courseDetailsMap: Record<number, { description: string; duration: string; level: string; topics: string[]; price: string }> = {
     1: {
       description: "Master advanced AI concepts and applications. Learn cutting-edge techniques in machine learning, neural networks, and AI implementation.",
-      duration: "Upcoming",
+      duration: "4 weeks",
       level: "Advanced",
       topics: ["Neural Networks", "Deep Learning", "NLP", "Computer Vision", "AI Ethics"],
-      price: "Upcoming"
+      price: "₹199"
     },
     2: {
       description: "Learn the fundamentals of Artificial Intelligence. Perfect for beginners who want to understand AI concepts and applications.",
@@ -155,6 +156,7 @@ export function CourseDetails({ course, onGoBack }: CourseDetailsProps) {
             </div>
 
             <Button 
+              onClick={onEnrollClick}
               className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-6 text-lg font-semibold rounded-lg"
             >
               Enroll Now

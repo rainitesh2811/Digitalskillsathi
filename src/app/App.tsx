@@ -15,6 +15,7 @@ import { AboutUs } from "./pages/AboutUs";
 import { ContactUs } from "./pages/ContactUs";
 import { CourseDetails } from "./pages/CourseDetails";
 import MyCourses from "./pages/MyCourses";
+import { Payment } from "./pages/Payment";
 import { PaymentHistory } from "./pages/PaymentHistory";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { RefundPolicy } from "./pages/RefundPolicy";
@@ -123,6 +124,14 @@ export default function App() {
         }
       }
       
+      if (path.startsWith("/payment/")) {
+        const courseId = parseInt(path.split("/payment/")[1]);
+        const course = allCourses.find(c => c.id === courseId);
+        if (course) {
+          setSelectedCourse(course);
+        }
+      }
+      
       if (path === "/login") {
         setIsLoginOpen(true);
         setIsSignupOpen(false);
@@ -202,6 +211,21 @@ export default function App() {
   };
 
   const handleGoBackFromDetails = () => {
+    setSelectedCourse(null);
+    handleNavClick("/");
+  };
+
+  const handleEnrollClick = () => {
+    if (!isLoggedIn) {
+      setIsSignupOpen(true);
+      return;
+    }
+    if (selectedCourse) {
+      handleNavClick(`/payment/${selectedCourse.id}`);
+    }
+  };
+
+  const handleGoBackFromPayment = () => {
     setSelectedCourse(null);
     handleNavClick("/");
   };
@@ -337,7 +361,52 @@ export default function App() {
     return (
       <>
         <Header onLoginClick={handleLoginClick} onSignupClick={handleSignupClick} />
-        <CourseDetails course={selectedCourse} onGoBack={handleGoBackFromDetails} />
+        <CourseDetails course={selectedCourse} onGoBack={handleGoBackFromDetails} onEnrollClick={handleEnrollClick} />
+        <Footer />
+        <LoginModal 
+          isOpen={isLoginOpen} 
+          onClose={handleCloseLogin}
+          onSwitchToSignup={() => {
+            handleNavClick("/signup");
+          }}
+        />
+        <SignupModal 
+          isOpen={isSignupOpen} 
+          onClose={handleCloseSignup}
+          onSwitchToLogin={() => {
+            handleNavClick("/login");
+          }}
+        />
+      </>
+    );
+  }
+
+  // Handle payment page
+  if (currentPage.startsWith("/payment/")) {
+    if (!isLoggedIn) {
+      return (
+        <>
+          <Header onLoginClick={handleLoginClick} onSignupClick={handleSignupClick} />
+          <div className="min-h-screen flex items-center justify-center">
+            <div className="text-center">
+              <p className="text-lg text-gray-700 mb-4">Please log in to proceed with enrollment.</p>
+              <div className="flex items-center justify-center gap-4">
+                <Button variant="ghost" onClick={handleLoginClick}>Login</Button>
+                <Button onClick={handleSignupClick}>Sign Up</Button>
+              </div>
+            </div>
+          </div>
+          <Footer />
+          <LoginModal isOpen={isLoginOpen} onClose={handleCloseLogin} onSwitchToSignup={() => handleNavClick("/signup")} />
+          <SignupModal isOpen={isSignupOpen} onClose={handleCloseSignup} onSwitchToLogin={() => handleNavClick("/login")} />
+        </>
+      );
+    }
+
+    return (
+      <>
+        <Header onLoginClick={handleLoginClick} onSignupClick={handleSignupClick} />
+        <Payment course={selectedCourse} onGoBack={handleGoBackFromPayment} />
         <Footer />
         <LoginModal 
           isOpen={isLoginOpen} 

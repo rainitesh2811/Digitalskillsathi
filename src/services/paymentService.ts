@@ -37,7 +37,8 @@ export async function createRazorpayPayment(
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.error || "Failed to create Razorpay order");
+      console.error("Backend error response:", errorData);
+      throw new Error(errorData.message || errorData.error || "Failed to create Razorpay order");
     }
 
     const paymentData = await response.json();
