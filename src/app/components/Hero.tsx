@@ -3,9 +3,10 @@ import { GraduationCap, Play } from "lucide-react";
 
 interface HeroProps {
   onExploreCourses?: () => void;
+  onWatchDemo?: () => void;
 }
 
-export function Hero({ onExploreCourses }: HeroProps) {
+export function Hero({ onExploreCourses, onWatchDemo }: HeroProps) {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-orange-50 via-red-50 to-white">
       <div className="container mx-auto px-4 py-16 md:py-24">
@@ -37,6 +38,7 @@ export function Hero({ onExploreCourses }: HeroProps) {
                 size="lg" 
                 variant="outline" 
                 className="border-2 border-orange-200 text-orange-700 hover:bg-orange-50 text-base px-8 gap-2"
+                onClick={onWatchDemo}
               >
                 <Play className="h-5 w-5 fill-current" />
                 Watch Demo

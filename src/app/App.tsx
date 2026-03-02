@@ -15,9 +15,12 @@ import { AboutUs } from "./pages/AboutUs";
 import { ContactUs } from "./pages/ContactUs";
 import { CourseDetails } from "./pages/CourseDetails";
 import MyCourses from "./pages/MyCourses";
+import { PaymentHistory } from "./pages/PaymentHistory";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { RefundPolicy } from "./pages/RefundPolicy";
+import { Settings } from "./pages/Settings";
 import { TermsOfService } from "./pages/TermsOfService";
+import { WatchDemo } from "./pages/WatchDemo";
 
 interface Course {
   id: number;
@@ -203,11 +206,96 @@ export default function App() {
     handleNavClick("/");
   };
 
+  const handleWatchDemo = () => {
+    handleNavClick("/watch-demo");
+  };
+
+  const handleGoBackFromDemo = () => {
+    handleNavClick("/");
+  };
+
   if (currentPage === "/privacy-policy") return <PrivacyPolicy />;
   if (currentPage === "/terms-of-service") return <TermsOfService />;
   if (currentPage === "/refund-policy") return <RefundPolicy />;
   if (currentPage === "/about") return <AboutUs />;
   if (currentPage === "/contact") return <ContactUs />;
+  if (currentPage === "/watch-demo") {
+    return (
+      <>
+        <Header onLoginClick={handleLoginClick} onSignupClick={handleSignupClick} />
+        <WatchDemo onBack={handleGoBackFromDemo} />
+        <Footer />
+        <LoginModal isOpen={isLoginOpen} onClose={handleCloseLogin} onSwitchToSignup={() => handleNavClick("/signup")} />
+        <SignupModal isOpen={isSignupOpen} onClose={handleCloseSignup} onSwitchToLogin={() => handleNavClick("/login")} />
+      </>
+    );
+  }
+  
+  // Handle Settings route
+  if (currentPage === "/settings") {
+    if (!isLoggedIn) {
+      return (
+        <>
+          <Header onLoginClick={handleLoginClick} onSignupClick={handleSignupClick} />
+          <div className="min-h-screen flex items-center justify-center">
+            <div className="text-center">
+              <p className="text-lg text-gray-700 mb-4">Please log in to access settings.</p>
+              <div className="flex items-center justify-center gap-4">
+                <Button variant="ghost" onClick={handleLoginClick}>Login</Button>
+                <Button onClick={handleSignupClick}>Sign Up</Button>
+              </div>
+            </div>
+          </div>
+          <Footer />
+          <LoginModal isOpen={isLoginOpen} onClose={handleCloseLogin} onSwitchToSignup={() => handleNavClick("/signup")} />
+          <SignupModal isOpen={isSignupOpen} onClose={handleCloseSignup} onSwitchToLogin={() => handleNavClick("/login")} />
+        </>
+      );
+    }
+
+    return (
+      <>
+        <Header onLoginClick={handleLoginClick} onSignupClick={handleSignupClick} />
+        <Settings />
+        <Footer />
+        <LoginModal isOpen={isLoginOpen} onClose={handleCloseLogin} onSwitchToSignup={() => handleNavClick("/signup")} />
+        <SignupModal isOpen={isSignupOpen} onClose={handleCloseSignup} onSwitchToLogin={() => handleNavClick("/login")} />
+      </>
+    );
+  }
+
+  // Handle Payment History route
+  if (currentPage === "/payment-history") {
+    if (!isLoggedIn) {
+      return (
+        <>
+          <Header onLoginClick={handleLoginClick} onSignupClick={handleSignupClick} />
+          <div className="min-h-screen flex items-center justify-center">
+            <div className="text-center">
+              <p className="text-lg text-gray-700 mb-4">Please log in to view payment history.</p>
+              <div className="flex items-center justify-center gap-4">
+                <Button variant="ghost" onClick={handleLoginClick}>Login</Button>
+                <Button onClick={handleSignupClick}>Sign Up</Button>
+              </div>
+            </div>
+          </div>
+          <Footer />
+          <LoginModal isOpen={isLoginOpen} onClose={handleCloseLogin} onSwitchToSignup={() => handleNavClick("/signup")} />
+          <SignupModal isOpen={isSignupOpen} onClose={handleCloseSignup} onSwitchToLogin={() => handleNavClick("/login")} />
+        </>
+      );
+    }
+
+    return (
+      <>
+        <Header onLoginClick={handleLoginClick} onSignupClick={handleSignupClick} />
+        <PaymentHistory />
+        <Footer />
+        <LoginModal isOpen={isLoginOpen} onClose={handleCloseLogin} onSwitchToSignup={() => handleNavClick("/signup")} />
+        <SignupModal isOpen={isSignupOpen} onClose={handleCloseSignup} onSwitchToLogin={() => handleNavClick("/login")} />
+      </>
+    );
+  }
   
   // Handle My Courses route
   if (currentPage === "/my-courses") {
@@ -273,9 +361,9 @@ export default function App() {
     <div className="min-h-screen bg-white">
       <Header onLoginClick={handleLoginClick} onSignupClick={handleSignupClick} />
       <main>
-        <Hero onExploreCourses={handleExploreCourses} />
+        <Hero onExploreCourses={handleExploreCourses} onWatchDemo={handleWatchDemo} />
         <Categories onExploreCourses={handleExploreCourses} />
-        <div ref={featuredCoursesRef}>
+        <div ref={featuredCoursesRef} data-courses-section>
           <CourseCategories onExploreCourses={handleExploreCourses} selectedCategory={selectedCategory} onCourseSelect={handleCourseSelect} />
         </div>
 

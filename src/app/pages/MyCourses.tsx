@@ -30,7 +30,6 @@ export default function MyCourses() {
     let mounted = true;
     const load = async () => {
       setLoading(true);
-      // Scroll to top of page when component mounts
       window.scrollTo(0, 0);
       const { data: userData } = await supabase.auth.getUser();
       const user = userData?.user || null;
@@ -40,11 +39,10 @@ export default function MyCourses() {
       }
       if (mounted) setUserEmail(user.email || null);
 
-      // Fetch enrollments for the user. Expecting table `enrollments` with at least `user_id` and `course_id` columns
       try {
         const { data, error } = await supabase
-          .from("enrollments")
-          .select("course_id")
+          .from("user_courses")
+          .select("course_title")
           .eq("user_id", user.id);
 
         if (error) {
@@ -57,8 +55,8 @@ export default function MyCourses() {
           return;
         }
 
-        const ids: number[] = (data || []).map((r: any) => Number(r.course_id));
-        const courses = allCourses.filter((c) => ids.includes(c.id));
+        const titles: string[] = (data || []).map((r: any) => r.course_title);
+        const courses = allCourses.filter((c) => titles.includes(c.title));
         if (mounted) setEnrolledCourses(courses);
       } catch (e) {
         console.error(e);

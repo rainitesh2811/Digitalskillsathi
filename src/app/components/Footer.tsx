@@ -2,9 +2,23 @@ import { Instagram, Mail, MapPin, Phone, Youtube } from "lucide-react";
 
 export function Footer() {
   const handleNavigateToPolicy = (page: string) => {
-    window.history.pushState({}, "", `/${page}`);
+    const path = page === "" ? "/" : `/${page}`;
+    window.history.pushState({}, "", path);
     window.dispatchEvent(new PopStateEvent("popstate"));
     window.dispatchEvent(new Event("navigate"));
+  };
+
+  const handleNavigateToCourses = () => {
+    window.history.pushState({}, "", "/");
+    window.dispatchEvent(new PopStateEvent("popstate"));
+    window.dispatchEvent(new Event("navigate"));
+    // Scroll to courses section after a small delay to allow page to load
+    setTimeout(() => {
+      const coursesSection = document.querySelector('[data-courses-section]');
+      if (coursesSection) {
+        coursesSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
   };
 
   return (
@@ -38,7 +52,7 @@ export function Footer() {
                 <button onClick={() => handleNavigateToPolicy("contact")} className="hover:text-orange-400 transition-colors cursor-pointer">Contact Us</button>
               </li>
               <li>
-                <a href="#courses" className="hover:text-orange-400 transition-colors">Courses</a>
+                <button onClick={handleNavigateToCourses} className="hover:text-orange-400 transition-colors cursor-pointer">Courses</button>
               </li>
               <li>
                 <a href="#" className="hover:text-orange-400 transition-colors">Blog</a>
