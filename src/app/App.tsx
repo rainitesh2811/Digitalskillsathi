@@ -14,6 +14,7 @@ import { Button } from "./components/ui/button";
 import { AboutUs } from "./pages/AboutUs";
 import { ContactUs } from "./pages/ContactUs";
 import { CourseDetails } from "./pages/CourseDetails";
+import { MeditationModules } from "./pages/MeditationModules";
 import MyCourses from "./pages/MyCourses";
 import { Payment } from "./pages/Payment";
 import { PaymentHistory } from "./pages/PaymentHistory";
@@ -238,6 +239,14 @@ export default function App() {
     handleNavClick("/");
   };
 
+  const handleMeditationClick = () => {
+    handleNavClick("/meditation-modules");
+  };
+
+  const handleGoBackFromMeditationModules = () => {
+    handleNavClick("/watch-demo");
+  };
+
   if (currentPage === "/privacy-policy") return <PrivacyPolicy />;
   if (currentPage === "/terms-of-service") return <TermsOfService />;
   if (currentPage === "/refund-policy") return <RefundPolicy />;
@@ -247,7 +256,19 @@ export default function App() {
     return (
       <>
         <Header onLoginClick={handleLoginClick} onSignupClick={handleSignupClick} />
-        <WatchDemo onBack={handleGoBackFromDemo} />
+        <WatchDemo onBack={handleGoBackFromDemo} onMeditationClick={handleMeditationClick} />
+        <Footer />
+        <LoginModal isOpen={isLoginOpen} onClose={handleCloseLogin} onSwitchToSignup={() => handleNavClick("/signup")} />
+        <SignupModal isOpen={isSignupOpen} onClose={handleCloseSignup} onSwitchToLogin={() => handleNavClick("/login")} />
+      </>
+    );
+  }
+
+  if (currentPage === "/meditation-modules") {
+    return (
+      <>
+        <Header onLoginClick={handleLoginClick} onSignupClick={handleSignupClick} />
+        <MeditationModules onBack={handleGoBackFromMeditationModules} />
         <Footer />
         <LoginModal isOpen={isLoginOpen} onClose={handleCloseLogin} onSwitchToSignup={() => handleNavClick("/signup")} />
         <SignupModal isOpen={isSignupOpen} onClose={handleCloseSignup} onSwitchToLogin={() => handleNavClick("/login")} />

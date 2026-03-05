@@ -112,21 +112,25 @@ export function CourseCategories({ onCourseSelect }: CourseCategoriesProps) {
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-12">
           {filteredCategories.map((category, index) => (
-            <Card
-              key={category.id}
-              onClick={() => handleCourseClick(category)}
-              style={{ transitionDelay: `${index * 100}ms` }}
-              className={`group p-0 transition-all duration-500 cursor-pointer border-none shadow-none hover:shadow-2xl hover:scale-105 rounded-[2rem] md:rounded-[3.5rem] bg-white flex flex-col items-center justify-center overflow-hidden ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-            >
-              <div className="w-full h-full aspect-square flex items-center justify-center p-1 md:p-2">
-                <img
-                  src={category.icon}
-                  alt={category.title}
-                  className="w-full h-full object-contain scale-110 md:scale-125 group-hover:scale-[1.35] transition-transform duration-500"
-                  onError={(e) => (e.currentTarget.style.display = 'none')}
-                />
-              </div>
-            </Card>
+            <div key={category.id} className="flex flex-col items-center">
+              <Card
+                onClick={() => handleCourseClick(category)}
+                style={{ transitionDelay: `${index * 100}ms` }}
+                className={`group p-0 transition-all duration-500 cursor-pointer border-none shadow-none hover:shadow-2xl hover:scale-105 rounded-[2rem] md:rounded-[3.5rem] bg-white flex flex-col items-center justify-center overflow-hidden ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+              >
+                <div className="w-full h-full aspect-square flex items-center justify-center p-1 md:p-2">
+                  <img
+                    src={category.icon}
+                    alt={category.title}
+                    className="w-full h-full object-contain scale-110 md:scale-125 group-hover:scale-[1.35] transition-transform duration-500"
+                    onError={(e) => (e.currentTarget.style.display = 'none')}
+                  />
+                </div>
+              </Card>
+              <p className="text-orange-600 font-semibold text-sm md:text-base mt-3 text-center">
+                {category.title}
+              </p>
+            </div>
           ))}
         </div>
       </div>

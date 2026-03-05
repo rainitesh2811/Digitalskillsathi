@@ -12,6 +12,7 @@ interface DemoVideo {
 
 interface WatchDemoProps {
   onBack?: () => void;
+  onMeditationClick?: () => void;
 }
 
 const demoVideos: DemoVideo[] = [
@@ -40,7 +41,7 @@ const demoVideos: DemoVideo[] = [
 
 const filterOptions = ["All", "Web Dev", "Data Science", "Marketing", "Design", "Meditation"];
 
-export function WatchDemo({ onBack }: WatchDemoProps) {
+export function WatchDemo({ onBack, onMeditationClick }: WatchDemoProps) {
   const [activeTab, setActiveTab] = useState("All");
   const [isVisible, setIsVisible] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState<DemoVideo | null>(null);
@@ -54,6 +55,13 @@ export function WatchDemo({ onBack }: WatchDemoProps) {
     : demoVideos.filter((video) => video.category === activeTab);
 
   const handleVideoSelect = (video: DemoVideo) => {
+    // Handle meditation specially - navigate to modules page
+    if (video.category === "Meditation") {
+      if (onMeditationClick) {
+        onMeditationClick();
+      }
+      return;
+    }
     setSelectedVideo(video);
   };
 
@@ -97,32 +105,36 @@ export function WatchDemo({ onBack }: WatchDemoProps) {
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-12">
           {filteredVideos.map((video, index) => (
-            <Card
-              key={video.id}
-              onClick={() => handleVideoSelect(video)}
-              style={{ transitionDelay: `${index * 100}ms` }}
-              className={`group p-0 transition-all duration-500 cursor-pointer border-none shadow-none hover:shadow-2xl hover:scale-105 rounded-[2rem] md:rounded-[3.5rem] bg-white flex flex-col items-center justify-center overflow-hidden ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-            >
-              <div className="w-full h-full aspect-square flex items-center justify-center p-1 md:p-2 relative">
-                <img
-                  src={video.icon}
-                  alt={video.title}
-                  className="w-full h-full object-contain scale-110 md:scale-125 group-hover:scale-[1.35] transition-transform duration-500"
-                  onError={(e) => (e.currentTarget.style.display = 'none')}
-                />
-                {/* Play indicator overlay */}
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
-                  <div className="bg-orange-600 rounded-full p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg">
-                    <svg
-                      className="w-6 h-6 text-white fill-current"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M5 3v14l11-7z" />
-                    </svg>
+            <div key={video.id} className="flex flex-col items-center">
+              <Card
+                onClick={() => handleVideoSelect(video)}
+                style={{ transitionDelay: `${index * 100}ms` }}
+                className={`group p-0 transition-all duration-500 cursor-pointer border-none shadow-none hover:shadow-2xl hover:scale-105 rounded-[2rem] md:rounded-[3.5rem] bg-white flex flex-col items-center justify-center overflow-hidden ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+              >
+                <div className="w-full h-full aspect-square flex items-center justify-center p-1 md:p-2 relative">
+                  <img
+                    src={video.icon}
+                    alt={video.title}
+                    className="w-full h-full object-contain scale-110 md:scale-125 group-hover:scale-[1.35] transition-transform duration-500"
+                    onError={(e) => (e.currentTarget.style.display = 'none')}
+                  />
+                  {/* Play indicator overlay */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
+                    <div className="bg-orange-600 rounded-full p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg">
+                      <svg
+                        className="w-6 h-6 text-white fill-current"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M5 3v14l11-7z" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Card>
+              </Card>
+              <p className="text-orange-600 font-semibold text-sm md:text-base mt-3 text-center">
+                {video.title}
+              </p>
+            </div>
           ))}
           </div>
         </div>
