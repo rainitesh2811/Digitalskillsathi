@@ -120,10 +120,15 @@ export function MeditationModules({ onBack }: MeditationModulesProps) {
                   className={`group cursor-pointer border-2 border-gray-200 hover:border-orange-600 shadow-md hover:shadow-xl transition-all duration-300 rounded-xl overflow-hidden flex flex-col h-full ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
                 >
                   <div className="bg-gradient-to-br from-orange-50 to-orange-100 p-8 flex items-center justify-center min-h-[200px]">
-                    <div className="text-center">
-                      <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-orange-600 text-white mb-4">
-                        <span className="text-3xl font-bold">{module.module_order}</span>
-                      </div>
+                    <div className="text-center w-full">
+                      <img 
+                        src="/meditation.png" 
+                        alt="Meditation" 
+                        className="w-24 h-24 object-contain mx-auto mb-4"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="45" fill="%23f97316"/%3E%3Ctext x="50" y="55" font-size="40" fill="white" text-anchor="middle"%3E🧘%3C/text%3E%3C/svg%3E';
+                        }}
+                      />
                       <p className="text-sm text-gray-600">Module {module.module_order}</p>
                     </div>
                   </div>
@@ -180,7 +185,8 @@ export function MeditationModules({ onBack }: MeditationModulesProps) {
                 src={getGoogleDriveEmbedUrl(selectedModule.drive_file_id)}
                 title={selectedModule.title}
                 className="w-full h-full min-h-[400px] md:min-h-[500px] border-none"
-                allow="autoplay"
+                allow="autoplay; fullscreen"
+                allowFullScreen={true}
               ></iframe>
             </div>
 

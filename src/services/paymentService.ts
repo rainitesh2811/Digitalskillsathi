@@ -37,7 +37,6 @@ export async function createRazorpayPayment(
 
     if (!response.ok) {
       const errorData = await response.json();
-      console.error("Backend error response:", errorData);
       throw new Error(errorData.message || errorData.error || "Failed to create Razorpay order");
     }
 
@@ -50,7 +49,6 @@ export async function createRazorpayPayment(
       keyId: razorpayKeyId,
     };
   } catch (error) {
-    console.error("Error creating Razorpay payment:", error);
     throw error;
   }
 }
@@ -83,14 +81,31 @@ export async function verifyPaymentWithBackend(
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
-      console.error("Payment verification failed:", errorData);
       return false;
     }
 
     return true;
   } catch (error) {
-    console.error("Error verifying payment with backend:", error);
     return false;
+  }
+}
+/**
+ * Fetch purchased courses for a user
+ */
+export async function getPurchasedCourses(userId: string): Promise<string[]> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/payment/purchased-courses/${userId}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!response.ok) {
+      return [];
+    }
+
+    const data = await response.json();
+    return data.purchasedCourses?.map((course: any) => course.course_title) || [];
+  } catch (error) {
+    return [];
   }
 }

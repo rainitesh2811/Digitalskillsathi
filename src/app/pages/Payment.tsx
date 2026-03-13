@@ -113,7 +113,7 @@ export function Payment({ course, onGoBack }: PaymentPageProps) {
         order_id: orderResponse.orderId_razorpay,
         handler: async (response: any) => {
           try {
-            // Step 4: Verify payment on backend
+            // Verify payment on backend
             const isVerified = await verifyPaymentWithBackend(
               user.id,
               orderResponse.orderId_razorpay || "",
@@ -126,15 +126,17 @@ export function Payment({ course, onGoBack }: PaymentPageProps) {
 
             if (isVerified) {
               setIsLoading(false);
-              // Payment successful - redirect to My Courses
-              window.history.pushState({}, "", "/my-courses");
-              window.location.reload();
+              setError(null);
+              // Redirect to My Courses
+              setTimeout(() => {
+                window.location.href = "/my-courses";
+              }, 500);
             } else {
-              throw new Error("Payment verification failed");
+              setError("Payment verification failed. Please try again.");
+              setIsLoading(false);
             }
           } catch (verifyError) {
-            setError("Payment verified but enrollment failed. Please contact support.");
-            console.error("Verification error:", verifyError);
+            setError("Payment failed. Please contact support.");
             setIsLoading(false);
           }
         },
