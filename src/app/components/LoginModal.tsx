@@ -1,6 +1,5 @@
 import { X, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { useState, FormEvent } from "react";
-// Adjust these imports based on your auth.js file exports
 import { loginWithEmail, loginWithGoogle } from "../../auth";
 
 interface LoginModalProps {
