@@ -14,6 +14,7 @@ import { Button } from "./components/ui/button";
 import { AboutUs } from "./pages/AboutUs";
 import { ContactUs } from "./pages/ContactUs";
 import { CourseDetails } from "./pages/CourseDetails";
+import { Ebook, type Ebook as EbookType } from "./pages/Ebook";
 import { MeditationModules } from "./pages/MeditationModules";
 import MyCourses from "./pages/MyCourses";
 import { Payment } from "./pages/Payment";
@@ -82,6 +83,19 @@ const allCourses: Course[] = [
   },
 ];
 
+const allEbooks: EbookType[] = [
+  {
+    id: "ebook-1",
+    title: "Smart Parenting For Modern World",
+    description: "Learn effective parenting strategies for the digital age.",
+    price: 199,
+    originalPrice: 599,
+    discount: 66,
+    icon: "/ebook1.png",
+    category: "Parenting",
+  },
+];
+
 export default function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
@@ -89,6 +103,7 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>();
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+  const [selectedEbook, setSelectedEbook] = useState<EbookType | null>(null);
   const featuredCoursesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -126,10 +141,20 @@ export default function App() {
       }
       
       if (path.startsWith("/payment/")) {
-        const courseId = parseInt(path.split("/payment/")[1]);
-        const course = allCourses.find(c => c.id === courseId);
-        if (course) {
-          setSelectedCourse(course);
+        // Check if it's an ebook payment route
+        if (path.startsWith("/payment/ebook/")) {
+          const ebookId = path.split("/payment/ebook/")[1];
+          const ebook = allEbooks.find(e => e.id === ebookId);
+          if (ebook) {
+            setSelectedEbook(ebook);
+          }
+        } else {
+          // Course payment route
+          const courseId = parseInt(path.split("/payment/")[1]);
+          const course = allCourses.find(c => c.id === courseId);
+          if (course) {
+            setSelectedCourse(course);
+          }
         }
       }
       
@@ -239,6 +264,25 @@ export default function App() {
     handleNavClick("/");
   };
 
+  const handleGoBackFromEbook = () => {
+    setSelectedEbook(null);
+    handleNavClick("/");
+  };
+
+  const handleEbookBuyNow = (ebook: EbookType) => {
+    if (!isLoggedIn) {
+      setIsSignupOpen(true);
+      return;
+    }
+    setSelectedEbook(ebook);
+    handleNavClick(`/payment/ebook/${ebook.id}`);
+  };
+
+  const handleGoBackFromEbookPayment = () => {
+    setSelectedEbook(null);
+    handleNavClick("/ebook");
+  };
+
   const handleMeditationClick = () => {
     handleNavClick("/meditation-modules");
   };
@@ -252,6 +296,62 @@ export default function App() {
   if (currentPage === "/refund-policy") return <RefundPolicy />;
   if (currentPage === "/about") return <AboutUs />;
   if (currentPage === "/contact") return <ContactUs />;
+  if (currentPage === "/ebook") {
+    return (
+      <>
+        <Header onLoginClick={handleLoginClick} onSignupClick={handleSignupClick} />
+        <Ebook onBack={handleGoBackFromEbook} onBuyNow={handleEbookBuyNow} />
+        <Footer />
+        <LoginModal isOpen={isLoginOpen} onClose={handleCloseLogin} onSwitchToSignup={() => handleNavClick("/signup")} />
+        <SignupModal isOpen={isSignupOpen} onClose={handleCloseSignup} onSwitchToLogin={() => handleNavClick("/login")} />
+      </>
+    );
+  }
+
+  // Handle ebook payment page
+  if (currentPage.startsWith("/payment/ebook/")) {
+    if (!isLoggedIn) {
+      return (
+        <>
+          <Header onLoginClick={handleLoginClick} onSignupClick={handleSignupClick} />
+          <div className="min-h-screen flex items-center justify-center">
+            <div className="text-center">
+              <p className="text-lg text-gray-700 mb-4">Please log in to proceed with payment.</p>
+              <div className="flex items-center justify-center gap-4">
+                <Button variant="ghost" onClick={handleLoginClick}>Login</Button>
+                <Button onClick={handleSignupClick}>Sign Up</Button>
+              </div>
+            </div>
+          </div>
+          <Footer />
+          <LoginModal isOpen={isLoginOpen} onClose={handleCloseLogin} onSwitchToSignup={() => handleNavClick("/signup")} />
+          <SignupModal isOpen={isSignupOpen} onClose={handleCloseSignup} onSwitchToLogin={() => handleNavClick("/login")} />
+        </>
+      );
+    }
+
+    return (
+      <>
+        <Header onLoginClick={handleLoginClick} onSignupClick={handleSignupClick} />
+        <Payment ebook={selectedEbook} onGoBack={handleGoBackFromEbookPayment} />
+        <Footer />
+        <LoginModal 
+          isOpen={isLoginOpen} 
+          onClose={handleCloseLogin}
+          onSwitchToSignup={() => {
+            handleNavClick("/signup");
+          }}
+        />
+        <SignupModal 
+          isOpen={isSignupOpen} 
+          onClose={handleCloseSignup}
+          onSwitchToLogin={() => {
+            handleNavClick("/login");
+          }}
+        />
+      </>
+    );
+  }
   if (currentPage === "/watch-demo") {
     return (
       <>

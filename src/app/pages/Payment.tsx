@@ -3,6 +3,7 @@ import { createRazorpayPayment, verifyPaymentWithBackend } from "@/services/paym
 import { supabase } from "@/supabaseclient";
 import { ChevronLeft } from "lucide-react";
 import { useEffect, useState } from "react";
+import { type Ebook } from "./Ebook";
 
 interface Course {
   id: number;
@@ -12,7 +13,8 @@ interface Course {
 }
 
 interface PaymentPageProps {
-  course: Course | null;
+  course?: Course | null;
+  ebook?: Ebook | null;
   onGoBack: () => void;
 }
 
@@ -22,7 +24,7 @@ declare global {
   }
 }
 
-export function Payment({ course, onGoBack }: PaymentPageProps) {
+export function Payment({ course, ebook, onGoBack }: PaymentPageProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [user, setUser] = useState<any>(null);
@@ -38,13 +40,13 @@ export function Payment({ course, onGoBack }: PaymentPageProps) {
     };
     
     getUser();
-  }, [course]);
+  }, [course, ebook]);
 
-  if (!course) {
+  if (!course && !ebook) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
-          <p className="text-gray-500 mb-4">Course not found</p>
+          <p className="text-gray-500 mb-4">Product not found</p>
           <Button onClick={onGoBack} variant="outline">
             Go Back
           </Button>
@@ -53,6 +55,7 @@ export function Payment({ course, onGoBack }: PaymentPageProps) {
     );
   }
 
+  // Handle course details
   const courseDetailsMap: Record<number, { price: number; description: string }> = {
     1: { price: 199, description: "Advanced AI course" },
     2: { price: 0, description: "Basic AI course" },
@@ -64,7 +67,32 @@ export function Payment({ course, onGoBack }: PaymentPageProps) {
     8: { price: 299, description: "Digital Marketing Advanced" },
   };
 
-  const details = courseDetailsMap[course.id] || { price: 0, description: "" };
+  // Determine product details
+  let productId: string;
+  let productTitle: string;
+  let productCategory: string;
+  let productPrice: number;
+  let productIcon: string;
+  let isEbook: boolean;
+
+  if (ebook) {
+    productId = ebook.id;
+    productTitle = ebook.title;
+    productCategory = ebook.category;
+    productPrice = ebook.price;
+    productIcon = ebook.icon;
+    isEbook = true;
+  } else if (course) {
+    const details = courseDetailsMap[course.id] || { price: 0, description: "" };
+    productId = course.id.toString();
+    productTitle = course.title;
+    productCategory = course.category;
+    productPrice = details.price;
+    productIcon = course.icon;
+    isEbook = false;
+  } else {
+    return null;
+  }
 
   const handleProceedPayment = async () => {
     if (!user) {
@@ -72,8 +100,8 @@ export function Payment({ course, onGoBack }: PaymentPageProps) {
       return;
     }
 
-    if (details.price === 0) {
-      setError("This course is currently free or coming soon");
+    if (productPrice === 0) {
+      setError(`This ${isEbook ? "ebook" : "course"} is currently free or coming soon`);
       return;
     }
 
@@ -84,11 +112,12 @@ export function Payment({ course, onGoBack }: PaymentPageProps) {
       // Step 1: Create Razorpay order via backend
       const orderResponse = await createRazorpayPayment(
         user.id,
-        course.id.toString(),
-        details.price,
-        course.title,
+        productId,
+        productPrice,
+        productTitle,
         user.email || "",
-        user.user_metadata?.name || "Student"
+        user.user_metadata?.name || "Student",
+        isEbook ? "ebook" : "course"
       );
 
       // Step 2: Load Razorpay script if not already loaded
@@ -119,17 +148,18 @@ export function Payment({ course, onGoBack }: PaymentPageProps) {
               orderResponse.orderId_razorpay || "",
               response.razorpay_payment_id,
               response.razorpay_signature,
-              course.title,
-              course.category,
-              details.price
+              productTitle,
+              productCategory,
+              productPrice,
+              isEbook ? "ebook" : "course"
             );
 
             if (isVerified) {
               setIsLoading(false);
               setError(null);
-              // Redirect to My Courses
+              // Redirect to My Courses or Ebook page
               setTimeout(() => {
-                window.location.href = "/my-courses";
+                window.location.href = isEbook ? "/ebook" : "/my-courses";
               }, 500);
             } else {
               setError("Payment verification failed. Please try again.");
@@ -171,7 +201,7 @@ export function Payment({ course, onGoBack }: PaymentPageProps) {
             className="inline-flex items-center gap-2 text-orange-600 hover:text-orange-700 font-semibold transition-colors"
           >
             <ChevronLeft className="w-5 h-5" />
-            Back to Course
+            Back to {isEbook ? "Ebook" : "Course"}
           </button>
         </div>
       </div>
@@ -183,27 +213,53 @@ export function Payment({ course, onGoBack }: PaymentPageProps) {
       >
         <div className="max-w-2xl mx-auto">
           <div className="bg-white rounded-2xl p-8 shadow-lg mb-8">
-            <h1 className="text-4xl font-bold mb-8 text-gray-900">Complete Your Enrollment</h1>
+            <h1 className="text-4xl font-bold mb-8 text-gray-900">Complete Your {isEbook ? "Purchase" : "Enrollment"}</h1>
 
-            {/* Course Summary */}
+            {/* Product Summary */}
             <div className="mb-8 pb-8 border-b border-gray-200">
               <div className="flex gap-6 items-start">
                 <div className="flex-shrink-0">
-                  <div className="w-24 h-24 bg-white rounded-lg shadow flex items-center justify-center overflow-hidden border border-gray-200">
-                    <img
-                      src={course.icon}
-                      alt={course.title}
-                      className="w-full h-full object-contain p-2"
-                      onError={(e) => (e.currentTarget.style.display = "none")}
-                    />
-                  </div>
+                  {isEbook ? (
+                    // Check if productIcon is a file path or emoji
+                    productIcon && (productIcon.startsWith("/") || productIcon.startsWith(".")) ? (
+                      <div className="w-24 h-24 bg-white rounded-lg shadow flex items-center justify-center overflow-hidden border border-gray-200">
+                        <img
+                          src={productIcon}
+                          alt={productTitle}
+                          className="w-full h-full object-contain p-2"
+                          onError={(e) => (e.currentTarget.style.display = "none")}
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow flex items-center justify-center overflow-hidden border border-gray-200">
+                        <div className="text-4xl">{productIcon || "📚"}</div>
+                      </div>
+                    )
+                  ) : (
+                    <div className="w-24 h-24 bg-white rounded-lg shadow flex items-center justify-center overflow-hidden border border-gray-200">
+                      <img
+                        src={productIcon}
+                        alt={productTitle}
+                        className="w-full h-full object-contain p-2"
+                        onError={(e) => (e.currentTarget.style.display = "none")}
+                      />
+                    </div>
+                  )}
                 </div>
                 <div className="flex-grow">
                   <div className="inline-block bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-sm font-semibold mb-2">
-                    {course.category}
+                    {productCategory}
                   </div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-2">{course.title}</h2>
-                  <p className="text-gray-600">{details.description}</p>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">{productTitle}</h2>
+                  {ebook && (
+                    <>
+                      <p className="text-gray-600 mb-2">{ebook.description}</p>
+                      <div className="flex items-center gap-2">
+                        <span className="font-semibold text-gray-900">Save ₹{ebook.originalPrice - ebook.price}</span>
+                        <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded">{ebook.discount}% OFF</span>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -212,12 +268,12 @@ export function Payment({ course, onGoBack }: PaymentPageProps) {
             <div className="mb-8">
               <div className="bg-orange-50 rounded-lg p-6">
                 <div className="flex justify-between items-center mb-4">
-                  <span className="text-gray-700 font-medium">Course Price</span>
+                  <span className="text-gray-700 font-medium">{isEbook ? "Ebook" : "Course"} Price</span>
                   <span className="text-2xl font-bold text-orange-600">
-                    {details.price === 0 ? "Free" : `₹${details.price}`}
+                    {productPrice === 0 ? "Free" : `₹${productPrice}`}
                   </span>
                 </div>
-                {details.price > 0 && (
+                {productPrice > 0 && (
                   <>
                     <div className="flex justify-between items-center mb-4 pb-4 border-b border-orange-200">
                       <span className="text-gray-700">Taxes & Fees</span>
@@ -225,7 +281,7 @@ export function Payment({ course, onGoBack }: PaymentPageProps) {
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-lg font-bold text-gray-900">Total Amount</span>
-                      <span className="text-3xl font-bold text-orange-600">₹{details.price}</span>
+                      <span className="text-3xl font-bold text-orange-600">₹{productPrice}</span>
                     </div>
                   </>
                 )}
@@ -264,10 +320,10 @@ export function Payment({ course, onGoBack }: PaymentPageProps) {
             {/* Proceed Button */}
             <Button
               onClick={handleProceedPayment}
-              disabled={isLoading || details.price === 0}
+              disabled={isLoading || productPrice === 0}
               className="w-full bg-orange-600 hover:bg-orange-700 text-white px-8 py-6 text-lg font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? "Processing..." : details.price === 0 ? "Coming Soon" : "Proceed to Payment"}
+              {isLoading ? "Processing..." : productPrice === 0 ? "Coming Soon" : "Proceed to Payment"}
             </Button>
 
             {/* Security Info */}

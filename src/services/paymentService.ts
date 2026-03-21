@@ -20,7 +20,8 @@ export async function createRazorpayPayment(
   amount: number,
   courseName: string,
   userEmail: string,
-  userName: string
+  userName: string,
+  productType: string = "course"
 ): Promise<CreateOrderResponse> {
   try {
     // Call backend API to create Razorpay order
@@ -32,6 +33,7 @@ export async function createRazorpayPayment(
         courseTitle: courseName,
         amount: amount, // Amount in INR
         category: "", // Add category if available
+        productType: productType,
       }),
     });
 
@@ -63,7 +65,8 @@ export async function verifyPaymentWithBackend(
   razorpaySignature: string,
   courseTitle: string,
   category: string,
-  amount: number
+  amount: number,
+  productType: string = "course"
 ): Promise<boolean> {
   try {
     const response = await fetch(`${API_BASE_URL}/api/payment/verify-payment`, {
@@ -77,6 +80,7 @@ export async function verifyPaymentWithBackend(
         razorpay_order_id: razorpayOrderId,
         razorpay_payment_id: razorpayPaymentId,
         razorpay_signature: razorpaySignature,
+        productType: productType,
       }),
     });
 

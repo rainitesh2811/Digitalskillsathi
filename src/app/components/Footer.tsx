@@ -21,6 +21,12 @@ export function Footer() {
     }, 100);
   };
 
+  const handleNavigateToEbook = () => {
+    window.history.pushState({}, "", "/ebook");
+    window.dispatchEvent(new PopStateEvent("popstate"));
+    window.dispatchEvent(new Event("navigate"));
+  };
+
   return (
     <footer id="contact" className="bg-gray-900 text-gray-300">
       <div className="container mx-auto px-4 py-12 md:py-16">
@@ -53,6 +59,9 @@ export function Footer() {
               </li>
               <li>
                 <button onClick={handleNavigateToCourses} className="hover:text-orange-400 transition-colors cursor-pointer">Courses</button>
+              </li>
+              <li>
+                <button onClick={handleNavigateToEbook} className="hover:text-orange-400 transition-colors cursor-pointer">Ebook</button>
               </li>
               <li>
                 <a href="#" className="hover:text-orange-400 transition-colors">Blog</a>
