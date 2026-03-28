@@ -79,6 +79,13 @@ export function Header({ onLoginClick, onSignupClick }: HeaderProps) {
             </button>
 
             <button
+              onClick={() => handleNavClick("/ebook")}
+              className="text-sm font-medium hover:text-orange-600 transition-colors"
+            >
+              Ebook
+            </button>
+
+            <button
               onClick={() => handleNavClick("/payment-history")}
               className="text-sm font-medium hover:text-orange-600 transition-colors"
             >
@@ -115,6 +122,13 @@ export function Header({ onLoginClick, onSignupClick }: HeaderProps) {
               className="text-sm font-medium hover:text-orange-600 transition-colors"
             >
               About
+            </button>
+
+            <button
+              onClick={() => handleNavClick("/ebook")}
+              className="text-sm font-medium hover:text-orange-600 transition-colors"
+            >
+              Ebook
             </button>
 
             <button
@@ -169,6 +183,13 @@ export function Header({ onLoginClick, onSignupClick }: HeaderProps) {
                 </button>
 
                 <button
+                  onClick={() => handleNavClick("/ebook")}
+                  className="text-sm font-medium text-left hover:text-orange-600 transition-colors"
+                >
+                  Ebook
+                </button>
+
+                <button
                   onClick={() => handleNavClick("/payment-history")}
                   className="text-sm font-medium text-left hover:text-orange-600 transition-colors"
                 >
@@ -202,6 +223,13 @@ export function Header({ onLoginClick, onSignupClick }: HeaderProps) {
                   className="text-sm font-medium text-left hover:text-orange-600 transition-colors"
                 >
                   About
+                </button>
+
+                <button
+                  onClick={() => handleNavClick("/ebook")}
+                  className="text-sm font-medium text-left hover:text-orange-600 transition-colors"
+                >
+                  Ebook
                 </button>
 
                 <button
