@@ -24,7 +24,7 @@ export function Ebook({ onBack, onBuyNow }: EbookProps) {
 
   const singleEbook: Ebook = {
     id: "ebook-1",
-    title: "Smart Parenting For Modern World",
+    title: "Smart Parenting For Modern World in Hindi",
     description: "Learn effective parenting strategies for the digital age.",
     price: 199,
     originalPrice: 599,
